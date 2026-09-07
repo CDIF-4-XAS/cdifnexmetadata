@@ -10,6 +10,7 @@
     "ex": "https://example.org/",
     "nxs": "https://manual.nexusformat.org/classes/",
     "xas": "https://w3id.org/cdif/xas/",
+    "wd": "https://www.wikidata.org/entity/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@id": "https://w3id.org/cdif/testing/NXmx-Therm_6_2",
@@ -100,46 +101,52 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/NXmx-Therm_6_2/instrument/source",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "X-ray source",
-            "schema:additionalType": [
-              {
-                "@id": "xas:source"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:xraysourcetype"
-                  }
-                ],
-                "schema:name": "X-ray source type",
-                "schema:value": "Synchrotron X-ray Source"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:probe"
-                  }
-                ],
-                "schema:name": "probe",
-                "schema:value": ":unav",
-                "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/NXmx-Therm_6_2/instrument/source",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "X-ray source",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:source"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:xraysourcetype"
+                    }
+                  ],
+                  "schema:name": "X-ray source type",
+                  "schema:value": "Synchrotron X-ray Source"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:probe"
+                    }
+                  ],
+                  "schema:name": "probe",
+                  "schema:value": ":unav",
+                  "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
+                }
+              ]
+            }
+          ]
         }
       ],
       "schema:startTime": "2019-02-14T14:25:57",

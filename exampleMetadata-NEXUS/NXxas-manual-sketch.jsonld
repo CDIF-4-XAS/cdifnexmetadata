@@ -10,6 +10,7 @@
     "ex": "https://example.org/",
     "nxs": "https://manual.nexusformat.org/classes/",
     "xas": "https://w3id.org/cdif/xas/",
+    "wd": "https://www.wikidata.org/entity/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch",
@@ -42,48 +43,43 @@
           "@id": "nxs:applications/NXxas.html"
         }
       ],
-      "cdi:isStructuredBy": [
-        {
-          "@id": "ex:DV/NXxas-manual-sketch/structure/1",
-          "@type": [
-            "cdi:DimensionalDataStructure"
-          ],
-          "schema:name": "NXxas-manual-sketch structure 1",
-          "schema:description": "shared by 1 of 1 entries",
-          "cdi:has_DataStructureComponent": [
-            {
-              "@id": "ex:DV/NXxas-manual-sketch/1/dsc/incidentintensity",
+      "cdi:isStructuredBy": {
+        "@id": "ex:DV/NXxas-manual-sketch/structure/1",
+        "@type": [
+          "cdi:DimensionalDataStructure"
+        ],
+        "schema:name": "NXxas-manual-sketch structure 1",
+        "schema:description": "shared by 1 of 1 entries",
+        "cdi:has_DataStructureComponent": [
+          {
+            "@id": "ex:DV/NXxas-manual-sketch/1/dsc/incidentintensity",
+            "@type": [
+              "cdi:MeasureComponent"
+            ],
+            "cdif:isDefinedBy_RepresentedVariable": {
+              "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/rv/incidentintensity",
               "@type": [
-                "cdi:MeasureComponent"
+                "cdi:RepresentedVariable"
               ],
-              "cdif:isDefinedBy_RepresentedVariable": {
-                "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/rv/incidentintensity",
-                "@type": [
-                  "cdi:RepresentedVariable"
-                ],
-                "schema:name": "incident intensity",
-                "cdif:name": {
-                  "@type": [
-                    "cdi:ObjectName"
-                  ],
-                  "cdif:name": "incident intensity"
-                }
-              },
-              "cdif:hasPhysicalMapping": {
-                "@id": "ex:DV/NXxas-manual-sketch/1/pm/incidentintensity",
-                "@type": [
-                  "cdif:LocatorMapping"
-                ],
-                "cdif:locator": "/entry/instrument/I0/data",
-                "cdif:physicalDataType": "xsd:decimal",
-                "cdif:formats_InstanceVariable": {
-                  "@id": "ex:DV/NXxas-manual-sketch/iv/incidentintensity"
-                }
+              "schema:name": "incident intensity",
+              "cdif:name": [
+                "incident intensity"
+              ]
+            },
+            "cdif:hasPhysicalMapping": {
+              "@id": "ex:DV/NXxas-manual-sketch/1/pm/incidentintensity",
+              "@type": [
+                "cdif:LocatorMapping"
+              ],
+              "cdif:locator": "/entry/instrument/I0/data",
+              "cdif:physicalDataType": "xsd:decimal",
+              "cdif:formats_InstanceVariable": {
+                "@id": "ex:DV/NXxas-manual-sketch/iv/incidentintensity"
               }
             }
-          ]
-        }
-      ]
+          }
+        ]
+      }
     }
   ],
   "schema:dateModified": "2026-07-29",
@@ -128,47 +124,53 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/instrument/source",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "X-ray source",
-            "schema:additionalType": [
-              {
-                "@id": "xas:source"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:probe"
-                  }
-                ],
-                "schema:name": "probe",
-                "schema:value": ":unav",
-                "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:xraysourcetype"
-                  }
-                ],
-                "schema:name": "xraysourcetype",
-                "schema:value": "Synchrotron X-ray Source",
-                "schema:description": "not recorded in the source file; an XAS measurement is made at a synchrotron, so the technique supplies this where the file does not"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/instrument/source",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "X-ray source",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:source"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:probe"
+                    }
+                  ],
+                  "schema:name": "probe",
+                  "schema:value": ":unav",
+                  "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:xraysourcetype"
+                    }
+                  ],
+                  "schema:name": "xraysourcetype",
+                  "schema:value": "Synchrotron X-ray Source",
+                  "schema:description": "not recorded in the source file; an XAS measurement is made at a synchrotron, so the technique supplies this where the file does not"
+                }
+              ]
+            }
+          ]
         },
         {
           "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/used/xraymonochromator",
@@ -176,61 +178,67 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/instrument/xraymonochromator",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "monochromator",
-            "schema:additionalType": [
-              {
-                "@id": "xas:xraymonochromator"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:monochromatortype"
-                  }
-                ],
-                "schema:name": "monochromator type",
-                "schema:value": ":unav",
-                "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:dspacing"
-                  }
-                ],
-                "schema:name": "dspacing",
-                "schema:value": ":unav",
-                "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed",
-                "schema:unitText": "Angstrom"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:reflectionplane"
-                  }
-                ],
-                "schema:name": "reflectionplane",
-                "schema:value": ":unav",
-                "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/instrument/xraymonochromator",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "monochromator",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:xraymonochromator"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:monochromatortype"
+                    }
+                  ],
+                  "schema:name": "monochromator type",
+                  "schema:value": ":unav",
+                  "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:dspacing"
+                    }
+                  ],
+                  "schema:name": "dspacing",
+                  "schema:value": ":unav",
+                  "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed",
+                  "schema:unitText": "Angstrom"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:reflectionplane"
+                    }
+                  ],
+                  "schema:name": "reflectionplane",
+                  "schema:value": ":unav",
+                  "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
+                }
+              ]
+            }
+          ]
         }
       ],
       "schema:object": {

@@ -83,7 +83,10 @@ def _structures(doc):
         if isinstance(s, dict) and "cdi:has_DataStructureComponent" in s:
             found[s["@id"]] = s
     if not found:
-        for s in dist.get("cdi:isStructuredBy", []):
+        # A distribution with no parts carries one structure, as an
+        # object -- cdi:isStructuredBy names a single data structure.
+        direct = dist.get("cdi:isStructuredBy")
+        for s in (direct if isinstance(direct, list) else [direct] if direct else []):
             found[s["@id"]] = s
     return list(found.values())
 
@@ -285,7 +288,7 @@ def test_a_single_entry_file_has_no_parts(tmp_path):
     doc = _emit(p, _xas_crosswalk(tmp_path)).document
     dist = doc["schema:distribution"][0]
     assert "schema:hasPart" not in dist
-    structures = dist["cdi:isStructuredBy"]
+    structures = [dist["cdi:isStructuredBy"]]
     assert len(structures) == 1
     assert structures[0]["cdi:has_DataStructureComponent"]
     # A description is always written; a single-entry file gets the
@@ -489,8 +492,10 @@ def test_prov_used_nests_the_instrument_so_framing_keeps_it(tmp_path):
         "prov:wasGeneratedBy"][0]["prov:used"]
     assert used and all("schema:instrument" in u for u in used)
     assert all(u["@type"] == ["schema:Thing", "prov:Entity"] for u in used)
-    inst = used[0]["schema:instrument"]
-    assert inst["@type"] == ["schema:Product", "schema:Thing"]
+    inst = used[0]["schema:instrument"][0]
+    # prov:Entity too: the profile requires the PROV class on the
+    # instrument itself, not only on the wrapper around it.
+    assert inst["@type"] == ["schema:Product", "schema:Thing", "prov:Entity"]
     assert inst["schema:name"] == "13-ID-E"
 
 
@@ -568,12 +573,12 @@ def test_beamline_source_and_monochromator_are_separate_peers(tmp_path):
              "nxdl:NXcrystal/d_spacing"),
     )
     used = _emit(p, cw).document["prov:wasGeneratedBy"][0]["prov:used"]
-    types = [u["schema:instrument"]["schema:additionalType"][0]["@id"]
+    types = [u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
              for u in used]
     assert types == ["xas:beamline", "xas:source", "xas:xraymonochromator"]
 
-    source = next(u["schema:instrument"] for u in used
-                  if u["schema:instrument"]["schema:additionalType"][0]["@id"]
+    source = next(u["schema:instrument"][0] for u in used
+                  if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
                   == "xas:source")
     ids = {pv["schema:propertyID"][0]["@id"]
            for pv in source["schema:additionalProperty"]}
@@ -606,9 +611,9 @@ def test_property_values_are_strings_even_when_the_file_says_otherwise(
              "nxdl:NXcrystal/reflection"),
     )
     mono = next(
-        u["schema:instrument"]
+        u["schema:instrument"][0]
         for u in _emit(p, cw).document["prov:wasGeneratedBy"][0]["prov:used"]
-        if u["schema:instrument"]["schema:additionalType"][0]["@id"]
+        if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
         == "xas:xraymonochromator")
     by_id = {pv["schema:propertyID"][0]["@id"]: pv
              for pv in mono["schema:additionalProperty"]}
@@ -680,7 +685,7 @@ def test_a_missing_source_type_depends_on_the_declared_technique(tmp_path):
         doc = _emit(f, _xas_crosswalk(tmp_path)).document
         peers = doc["prov:wasGeneratedBy"][0].get("prov:used", [])
         for u in peers:
-            i = u["schema:instrument"]
+            i = u["schema:instrument"][0]
             if i["schema:additionalType"][0]["@id"] != "xas:source":
                 continue
             for pv in i.get("schema:additionalProperty", []):
@@ -711,9 +716,9 @@ def test_a_non_xas_source_type_that_is_required_uses_the_nil_uri(tmp_path):
                          "nxdl:NXsource/probe"))
     doc = _emit(f, cw).document
     source = next(
-        u["schema:instrument"]
+        u["schema:instrument"][0]
         for u in doc["prov:wasGeneratedBy"][0]["prov:used"]
-        if u["schema:instrument"]["schema:additionalType"][0]["@id"]
+        if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
         == "xas:source")
     by_id = {p["schema:propertyID"][0]["@id"]: p["schema:value"]
              for p in source["schema:additionalProperty"]}

@@ -10,6 +10,7 @@
     "ex": "https://example.org/",
     "nxs": "https://manual.nexusformat.org/classes/",
     "xas": "https://w3id.org/cdif/xas/",
+    "wd": "https://www.wikidata.org/entity/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@id": "https://w3id.org/cdif/testing/co_metal_rt",
@@ -42,114 +43,103 @@
           "@id": "https://github.com/XraySpectroscopy/XAS-Data-Interchange/blob/master/specification/spec.md"
         }
       ],
-      "cdi:isStructuredBy": [
-        {
-          "@id": "ex:DV/co_metal_rt/structure/1",
-          "@type": [
-            "cdi:DimensionalDataStructure"
-          ],
-          "schema:name": "co_metal_rt structure 1",
-          "schema:description": "shared by 1 of 1 entries",
-          "cdi:has_DataStructureComponent": [
-            {
-              "@id": "ex:DV/co_metal_rt/1/dsc/absorptioncoefficient",
+      "cdi:isStructuredBy": {
+        "@id": "ex:DV/co_metal_rt/structure/1",
+        "@type": [
+          "cdi:DimensionalDataStructure"
+        ],
+        "schema:name": "co_metal_rt structure 1",
+        "schema:description": "shared by 1 of 1 entries",
+        "cdi:has_DataStructureComponent": [
+          {
+            "@id": "ex:DV/co_metal_rt/1/dsc/absorptioncoefficient",
+            "@type": [
+              "cdi:MeasureComponent"
+            ],
+            "cdif:isDefinedBy_RepresentedVariable": {
+              "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/absorptioncoefficient",
               "@type": [
-                "cdi:MeasureComponent"
+                "cdi:RepresentedVariable"
               ],
-              "cdif:isDefinedBy_RepresentedVariable": {
-                "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/absorptioncoefficient",
-                "@type": [
-                  "cdi:RepresentedVariable"
-                ],
-                "schema:name": "absorptioncoefficient",
-                "cdif:name": {
-                  "@type": [
-                    "cdi:ObjectName"
-                  ],
-                  "cdif:name": "absorptioncoefficient"
-                }
-              },
-              "cdif:hasPhysicalMapping": {
-                "@id": "ex:DV/co_metal_rt/1/pm/absorptioncoefficient",
-                "@type": [
-                  "cdif:TextMapping"
-                ],
-                "cdif:index": 2,
-                "cdif:physicalDataType": "xsd:decimal",
-                "cdi:minimumLength": 17,
-                "cdi:maximumLength": 21,
-                "cdif:formats_InstanceVariable": {
-                  "@id": "ex:DV/co_metal_rt/iv/absorptioncoefficient"
-                }
-              }
+              "schema:name": "absorptioncoefficient",
+              "cdif:name": [
+                "absorptioncoefficient"
+              ]
             },
-            {
-              "@id": "ex:DV/co_metal_rt/1/dsc/incidentintensity",
+            "cdif:hasPhysicalMapping": {
+              "@id": "ex:DV/co_metal_rt/1/pm/absorptioncoefficient",
               "@type": [
-                "cdi:MeasureComponent"
+                "cdif:TextMapping"
               ],
-              "cdif:isDefinedBy_RepresentedVariable": {
-                "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/incidentintensity",
-                "@type": [
-                  "cdi:RepresentedVariable"
-                ],
-                "schema:name": "incident intensity",
-                "cdif:name": {
-                  "@type": [
-                    "cdi:ObjectName"
-                  ],
-                  "cdif:name": "incident intensity"
-                }
-              },
-              "cdif:hasPhysicalMapping": {
-                "@id": "ex:DV/co_metal_rt/1/pm/incidentintensity",
-                "@type": [
-                  "cdif:TextMapping"
-                ],
-                "cdif:index": 3,
-                "cdif:physicalDataType": "xsd:decimal",
-                "cdi:minimumLength": 13,
-                "cdi:maximumLength": 17,
-                "cdif:formats_InstanceVariable": {
-                  "@id": "ex:DV/co_metal_rt/iv/incidentintensity"
-                }
-              }
-            },
-            {
-              "@id": "ex:DV/co_metal_rt/1/dsc/monochromatorenergy",
-              "@type": [
-                "cdi:DimensionComponent"
-              ],
-              "cdif:isDefinedBy_RepresentedVariable": {
-                "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/monochromatorenergy",
-                "@type": [
-                  "cdi:RepresentedVariable"
-                ],
-                "schema:name": "monochromator energy",
-                "cdif:name": {
-                  "@type": [
-                    "cdi:ObjectName"
-                  ],
-                  "cdif:name": "monochromator energy"
-                }
-              },
-              "cdif:hasPhysicalMapping": {
-                "@id": "ex:DV/co_metal_rt/1/pm/monochromatorenergy",
-                "@type": [
-                  "cdif:TextMapping"
-                ],
-                "cdif:index": 1,
-                "cdif:physicalDataType": "xsd:decimal",
-                "cdi:minimumLength": 11,
-                "cdi:maximumLength": 11,
-                "cdif:formats_InstanceVariable": {
-                  "@id": "ex:DV/co_metal_rt/iv/monochromatorenergy"
-                }
+              "cdif:index": 2,
+              "cdif:physicalDataType": "xsd:decimal",
+              "cdi:minimumLength": 17,
+              "cdi:maximumLength": 21,
+              "cdif:formats_InstanceVariable": {
+                "@id": "ex:DV/co_metal_rt/iv/absorptioncoefficient"
               }
             }
-          ]
-        }
-      ]
+          },
+          {
+            "@id": "ex:DV/co_metal_rt/1/dsc/incidentintensity",
+            "@type": [
+              "cdi:MeasureComponent"
+            ],
+            "cdif:isDefinedBy_RepresentedVariable": {
+              "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/incidentintensity",
+              "@type": [
+                "cdi:RepresentedVariable"
+              ],
+              "schema:name": "incident intensity",
+              "cdif:name": [
+                "incident intensity"
+              ]
+            },
+            "cdif:hasPhysicalMapping": {
+              "@id": "ex:DV/co_metal_rt/1/pm/incidentintensity",
+              "@type": [
+                "cdif:TextMapping"
+              ],
+              "cdif:index": 3,
+              "cdif:physicalDataType": "xsd:decimal",
+              "cdi:minimumLength": 13,
+              "cdi:maximumLength": 17,
+              "cdif:formats_InstanceVariable": {
+                "@id": "ex:DV/co_metal_rt/iv/incidentintensity"
+              }
+            }
+          },
+          {
+            "@id": "ex:DV/co_metal_rt/1/dsc/monochromatorenergy",
+            "@type": [
+              "cdi:DimensionComponent"
+            ],
+            "cdif:isDefinedBy_RepresentedVariable": {
+              "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/monochromatorenergy",
+              "@type": [
+                "cdi:RepresentedVariable"
+              ],
+              "schema:name": "monochromator energy",
+              "cdif:name": [
+                "monochromator energy"
+              ]
+            },
+            "cdif:hasPhysicalMapping": {
+              "@id": "ex:DV/co_metal_rt/1/pm/monochromatorenergy",
+              "@type": [
+                "cdif:TextMapping"
+              ],
+              "cdif:index": 1,
+              "cdif:physicalDataType": "xsd:decimal",
+              "cdi:minimumLength": 11,
+              "cdi:maximumLength": 11,
+              "cdif:formats_InstanceVariable": {
+                "@id": "ex:DV/co_metal_rt/iv/monochromatorenergy"
+              }
+            }
+          }
+        ]
+      }
     }
   ],
   "schema:dateModified": "2026-07-30",
@@ -246,19 +236,25 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/co_metal_rt/instrument/beamline",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "13-ID-C",
-            "schema:additionalType": [
-              {
-                "@id": "xas:beamline"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/co_metal_rt/instrument/beamline",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "13-ID-C",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:beamline"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ]
+            }
+          ]
         },
         {
           "@id": "https://w3id.org/cdif/testing/co_metal_rt/used/source",
@@ -266,45 +262,51 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/co_metal_rt/instrument/source",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "X-ray source",
-            "schema:additionalType": [
-              {
-                "@id": "xas:source"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:probe"
-                  }
-                ],
-                "schema:name": "Probe",
-                "schema:value": "x-ray"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:xraysourcetype"
-                  }
-                ],
-                "schema:name": "X-ray source type",
-                "schema:value": "APS undulator A"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/co_metal_rt/instrument/source",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "X-ray source",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:source"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:probe"
+                    }
+                  ],
+                  "schema:name": "Probe",
+                  "schema:value": "x-ray"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:xraysourcetype"
+                    }
+                  ],
+                  "schema:name": "X-ray source type",
+                  "schema:value": "APS undulator A"
+                }
+              ]
+            }
+          ]
         },
         {
           "@id": "https://w3id.org/cdif/testing/co_metal_rt/used/xraymonochromator",
@@ -312,58 +314,64 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/co_metal_rt/instrument/xraymonochromator",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "monochromator",
-            "schema:additionalType": [
-              {
-                "@id": "xas:xraymonochromator"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:dspacing"
-                  }
-                ],
-                "schema:name": "monochromator d-spacing",
-                "schema:value": "3.13555",
-                "schema:unitText": "Angstrom"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:monochromatortype"
-                  }
-                ],
-                "schema:name": "monochromator crystal",
-                "schema:value": "Si"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:reflectionplane"
-                  }
-                ],
-                "schema:name": "reflection plane",
-                "schema:value": "1 1 1"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/co_metal_rt/instrument/xraymonochromator",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "monochromator",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:xraymonochromator"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:dspacing"
+                    }
+                  ],
+                  "schema:name": "monochromator d-spacing",
+                  "schema:value": "3.13555",
+                  "schema:unitText": "Angstrom"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:monochromatortype"
+                    }
+                  ],
+                  "schema:name": "monochromator crystal",
+                  "schema:value": "Si"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:reflectionplane"
+                    }
+                  ],
+                  "schema:name": "reflection plane",
+                  "schema:value": "1 1 1"
+                }
+              ]
+            }
+          ]
         }
       ],
       "schema:object": {

@@ -70,6 +70,12 @@ CONTEXT = {
     "ex": "https://example.org/",
     "nxs": "https://manual.nexusformat.org/classes/",
     "xas": "https://w3id.org/cdif/xas/",
+    # Wikidata, for the scientific-instrument class the XAS profile
+    # requires on every instrument. Declared rather than left bare:
+    # an undeclared prefix is not a CURIE, so "wd:Q3099911" would
+    # expand to nothing and only pass because the schema compares
+    # the string.
+    "wd": "https://www.wikidata.org/entity/",
     "xsd": "http://www.w3.org/2001/XMLSchema#",
 }
 
@@ -613,10 +619,13 @@ def _variables(
                     "@id": rv_id,
                     "@type": ["cdi:RepresentedVariable"],
                     "schema:name": _readable(local),
-                    "cdif:name": {
-                        "@type": ["cdi:ObjectName"],
-                        "cdif:name": _readable(local),
-                    },
+                    # An array of plain strings. cdif:name is the CDIF
+                    # SIMPLIFICATION of the property; the canonical
+                    # cdi:name is what takes a cdi:ObjectName wrapper.
+                    # Emitting the cdif: property with the cdi: value
+                    # shape satisfied neither, and failed validation on
+                    # every document carrying a data structure.
+                    "cdif:name": [_readable(local)],
                 },
                 "cdif:hasPhysicalMapping": mapping,
             })
@@ -915,16 +924,30 @@ def _instruments(
         # validation of the raw document and then vanishes when framed.
         instrument: dict[str, Any] = {
             "@id": f"{base}/instrument/{slug}",
-            "@type": ["schema:Product", "schema:Thing"],
+            # prov:Entity as well as the schema.org types: the instrument
+            # is the entity the activity used, and the profile requires
+            # the PROV class on it, not only on the wrapper around it.
+            "@type": ["schema:Product", "schema:Thing", "prov:Entity"],
             "schema:name": name,
-            "schema:additionalType": [{"@id": kind}],
+            # Two classes, and the profile requires both: the xas: term
+            # says which instrument this is, wd:Q3099911 says that it is a
+            # scientific instrument at all. xasInstrument requires the
+            # Wikidata class, so emitting only the specific one failed
+            # validation on every document this tool produced.
+            "schema:additionalType": [
+                {"@id": kind},
+                {"@id": "wd:Q3099911"},
+            ],
         }
         if props:
             instrument["schema:additionalProperty"] = props
         return {
             "@id": f"{base}/used/{slug}",
             "@type": ["schema:Thing", "prov:Entity"],
-            "schema:instrument": instrument,
+            # An ARRAY, because one activity commonly uses several
+            # instruments in the same role and the profile pins the
+            # wrapper's value to a list. A bare object validated nowhere.
+            "schema:instrument": [instrument],
         }
 
     # Three peers, because the profile distinguishes them: the beamline
@@ -1112,7 +1135,17 @@ def emit_document(
     if parts:
         distribution["schema:hasPart"] = parts
     elif structures:
-        distribution["cdi:isStructuredBy"] = structures
+        # A single object, not a list: cdi:isStructuredBy takes one data
+        # structure, and a distribution reaching this branch has no parts,
+        # so it has one entry and therefore one structure. Emitting the
+        # list failed validation on every single-entry document.
+        distribution["cdi:isStructuredBy"] = structures[0]
+        if len(structures) > 1:
+            result.warnings.append(
+                f"{len(structures)} data structures for a distribution with "
+                "no parts; only the first is attached, because "
+                "cdi:isStructuredBy names one structure"
+            )
 
     # -- the dataset --------------------------------------------------------
     #

@@ -381,7 +381,7 @@ def test_the_same_emitter_serves_both_bindings(tmp_path):
     # of the data. Same rule as a one-entry NeXus file -- one emitter,
     # one placement rule.
     assert "schema:hasPart" not in dist
-    structures = dist["cdi:isStructuredBy"]
+    structures = [dist["cdi:isStructuredBy"]]
     assert len(structures) == 1
     assert structures[0]["cdi:has_DataStructureComponent"]
 
@@ -421,7 +421,7 @@ def test_a_text_column_gets_a_text_mapping_with_its_field_width(tmp_path):
     p = tmp_path / "f.xdi"
     p.write_text(SPACED, encoding="utf-8")
     doc = _emit(tmp_path).document
-    structure = doc["schema:distribution"][0]["cdi:isStructuredBy"][0]
+    structure = doc["schema:distribution"][0]["cdi:isStructuredBy"]
     mappings = [c["cdif:hasPhysicalMapping"]
                 for c in structure["cdi:has_DataStructureComponent"]]
     assert mappings, "no physical mappings emitted"
@@ -516,9 +516,9 @@ def test_a_required_property_the_file_omits_becomes_a_sentinel(tmp_path):
     text = SPACED.replace("# Mono.name: Si(111)", "# Mono.name: Si(111)")
     doc = _emit(tmp_path, text).document
     mono = next(
-        u["schema:instrument"]
+        u["schema:instrument"][0]
         for u in doc["prov:wasGeneratedBy"][0]["prov:used"]
-        if u["schema:instrument"]["schema:additionalType"][0]["@id"]
+        if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
         == "xas:xraymonochromator")
     by_id = {p["schema:propertyID"][0]["@id"]: p
              for p in mono["schema:additionalProperty"]}
@@ -536,9 +536,9 @@ def test_a_sentinel_never_displaces_a_recorded_value(tmp_path):
         "# Mono.name: Si(111)\n# Mono.d_spacing: 3.1355")
     doc = _emit(tmp_path, text).document
     mono = next(
-        u["schema:instrument"]
+        u["schema:instrument"][0]
         for u in doc["prov:wasGeneratedBy"][0]["prov:used"]
-        if u["schema:instrument"]["schema:additionalType"][0]["@id"]
+        if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
         == "xas:xraymonochromator")
     by_id = {p["schema:propertyID"][0]["@id"]: p
              for p in mono["schema:additionalProperty"]}

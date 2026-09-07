@@ -10,6 +10,7 @@
     "ex": "https://example.org/",
     "nxs": "https://manual.nexusformat.org/classes/",
     "xas": "https://w3id.org/cdif/xas/",
+    "wd": "https://www.wikidata.org/entity/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@id": "https://w3id.org/cdif/testing/FeXAS",
@@ -70,12 +71,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "absorptioncoefficient",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "absorptioncoefficient"
-                  }
+                  "cdif:name": [
+                    "absorptioncoefficient"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/1/pm/absorptioncoefficient",
@@ -100,12 +98,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "fluorescence absorptioncoefficient",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "fluorescence absorptioncoefficient"
-                  }
+                  "cdif:name": [
+                    "fluorescence absorptioncoefficient"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/1/pm/fluorescenceabsorptioncoefficient",
@@ -130,12 +125,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "fluorescence intensity",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "fluorescence intensity"
-                  }
+                  "cdif:name": [
+                    "fluorescence intensity"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/1/pm/fluorescenceintensity",
@@ -160,12 +152,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "incident intensity",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "incident intensity"
-                  }
+                  "cdif:name": [
+                    "incident intensity"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/1/pm/incidentintensity",
@@ -190,12 +179,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "monochromator energy",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "monochromator energy"
-                  }
+                  "cdif:name": [
+                    "monochromator energy"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/1/pm/monochromatorenergy",
@@ -220,12 +206,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "transmitted intensity",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "transmitted intensity"
-                  }
+                  "cdif:name": [
+                    "transmitted intensity"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/1/pm/transmittedintensity",
@@ -335,12 +318,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "fluorescence absorptioncoefficient",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "fluorescence absorptioncoefficient"
-                  }
+                  "cdif:name": [
+                    "fluorescence absorptioncoefficient"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/2/pm/fluorescenceabsorptioncoefficient",
@@ -365,12 +345,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "fluorescence intensity",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "fluorescence intensity"
-                  }
+                  "cdif:name": [
+                    "fluorescence intensity"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/2/pm/fluorescenceintensity",
@@ -395,12 +372,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "incident intensity",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "incident intensity"
-                  }
+                  "cdif:name": [
+                    "incident intensity"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/2/pm/incidentintensity",
@@ -425,12 +399,9 @@
                     "cdi:RepresentedVariable"
                   ],
                   "schema:name": "monochromator energy",
-                  "cdif:name": {
-                    "@type": [
-                      "cdi:ObjectName"
-                    ],
-                    "cdif:name": "monochromator energy"
-                  }
+                  "cdif:name": [
+                    "monochromator energy"
+                  ]
                 },
                 "cdif:hasPhysicalMapping": {
                   "@id": "ex:DV/FeXAS/2/pm/monochromatorenergy",
@@ -2489,19 +2460,25 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/FeXAS/instrument/beamline",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "13-ID-E",
-            "schema:additionalType": [
-              {
-                "@id": "xas:beamline"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/FeXAS/instrument/beamline",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "13-ID-E",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:beamline"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ]
+            }
+          ]
         },
         {
           "@id": "https://w3id.org/cdif/testing/FeXAS/used/source",
@@ -2509,45 +2486,51 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/FeXAS/instrument/source",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "X-ray source",
-            "schema:additionalType": [
-              {
-                "@id": "xas:source"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:probe"
-                  }
-                ],
-                "schema:name": "Probe",
-                "schema:value": "X-ray"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:xraysourcetype"
-                  }
-                ],
-                "schema:name": "X-ray source type",
-                "schema:value": "X-ray Source"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/FeXAS/instrument/source",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "X-ray source",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:source"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:probe"
+                    }
+                  ],
+                  "schema:name": "Probe",
+                  "schema:value": "X-ray"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:xraysourcetype"
+                    }
+                  ],
+                  "schema:name": "X-ray source type",
+                  "schema:value": "X-ray Source"
+                }
+              ]
+            }
+          ]
         },
         {
           "@id": "https://w3id.org/cdif/testing/FeXAS/used/xraymonochromator",
@@ -2555,59 +2538,65 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/FeXAS/instrument/xraymonochromator",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "monochromator",
-            "schema:additionalType": [
-              {
-                "@id": "xas:xraymonochromator"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:dspacing"
-                  }
-                ],
-                "schema:name": "monochromator d-spacing",
-                "schema:value": "1.637514293384398",
-                "schema:unitText": "Angstroms"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:reflectionplane"
-                  }
-                ],
-                "schema:name": "reflection plane",
-                "schema:value": "3 1 1"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:monochromatortype"
-                  }
-                ],
-                "schema:name": "monochromator type",
-                "schema:value": ":unav",
-                "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/FeXAS/instrument/xraymonochromator",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "monochromator",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:xraymonochromator"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:dspacing"
+                    }
+                  ],
+                  "schema:name": "monochromator d-spacing",
+                  "schema:value": "1.637514293384398",
+                  "schema:unitText": "Angstroms"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:reflectionplane"
+                    }
+                  ],
+                  "schema:name": "reflection plane",
+                  "schema:value": "3 1 1"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:monochromatortype"
+                    }
+                  ],
+                  "schema:name": "monochromator type",
+                  "schema:value": ":unav",
+                  "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
+                }
+              ]
+            }
+          ]
         }
       ],
       "schema:additionalProperty": [

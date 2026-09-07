@@ -10,6 +10,7 @@
     "ex": "https://example.org/",
     "nxs": "https://manual.nexusformat.org/classes/",
     "xas": "https://w3id.org/cdif/xas/",
+    "wd": "https://www.wikidata.org/entity/",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   },
   "@id": "https://w3id.org/cdif/testing/cu_metal_10K",
@@ -42,48 +43,43 @@
           "@id": "nxs:applications/NXxas.html"
         }
       ],
-      "cdi:isStructuredBy": [
-        {
-          "@id": "ex:DV/cu_metal_10K/structure/1",
-          "@type": [
-            "cdi:DimensionalDataStructure"
-          ],
-          "schema:name": "cu_metal_10K structure 1",
-          "schema:description": "shared by 1 of 1 entries",
-          "cdi:has_DataStructureComponent": [
-            {
-              "@id": "ex:DV/cu_metal_10K/1/dsc/monochromatorenergy",
+      "cdi:isStructuredBy": {
+        "@id": "ex:DV/cu_metal_10K/structure/1",
+        "@type": [
+          "cdi:DimensionalDataStructure"
+        ],
+        "schema:name": "cu_metal_10K structure 1",
+        "schema:description": "shared by 1 of 1 entries",
+        "cdi:has_DataStructureComponent": [
+          {
+            "@id": "ex:DV/cu_metal_10K/1/dsc/monochromatorenergy",
+            "@type": [
+              "cdi:DimensionComponent"
+            ],
+            "cdif:isDefinedBy_RepresentedVariable": {
+              "@id": "https://w3id.org/cdif/testing/cu_metal_10K/rv/monochromatorenergy",
               "@type": [
-                "cdi:DimensionComponent"
+                "cdi:RepresentedVariable"
               ],
-              "cdif:isDefinedBy_RepresentedVariable": {
-                "@id": "https://w3id.org/cdif/testing/cu_metal_10K/rv/monochromatorenergy",
-                "@type": [
-                  "cdi:RepresentedVariable"
-                ],
-                "schema:name": "monochromator energy",
-                "cdif:name": {
-                  "@type": [
-                    "cdi:ObjectName"
-                  ],
-                  "cdif:name": "monochromator energy"
-                }
-              },
-              "cdif:hasPhysicalMapping": {
-                "@id": "ex:DV/cu_metal_10K/1/pm/monochromatorenergy",
-                "@type": [
-                  "cdif:LocatorMapping"
-                ],
-                "cdif:locator": "/entry/instrument/monochromator/energy",
-                "cdif:physicalDataType": "xsd:decimal",
-                "cdif:formats_InstanceVariable": {
-                  "@id": "ex:DV/cu_metal_10K/iv/monochromatorenergy"
-                }
+              "schema:name": "monochromator energy",
+              "cdif:name": [
+                "monochromator energy"
+              ]
+            },
+            "cdif:hasPhysicalMapping": {
+              "@id": "ex:DV/cu_metal_10K/1/pm/monochromatorenergy",
+              "@type": [
+                "cdif:LocatorMapping"
+              ],
+              "cdif:locator": "/entry/instrument/monochromator/energy",
+              "cdif:physicalDataType": "xsd:decimal",
+              "cdif:formats_InstanceVariable": {
+                "@id": "ex:DV/cu_metal_10K/iv/monochromatorenergy"
               }
             }
-          ]
-        }
-      ]
+          }
+        ]
+      }
     }
   ],
   "schema:dateModified": "2026-07-28",
@@ -153,19 +149,25 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/cu_metal_10K/instrument/beamline",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "X11A",
-            "schema:additionalType": [
-              {
-                "@id": "xas:beamline"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/cu_metal_10K/instrument/beamline",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "X11A",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:beamline"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ]
+            }
+          ]
         },
         {
           "@id": "https://w3id.org/cdif/testing/cu_metal_10K/used/source",
@@ -173,45 +175,51 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/cu_metal_10K/instrument/source",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "X-ray source",
-            "schema:additionalType": [
-              {
-                "@id": "xas:source"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:probe"
-                  }
-                ],
-                "schema:name": "Probe",
-                "schema:value": "X-ray"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:xraysourcetype"
-                  }
-                ],
-                "schema:name": "X-ray source type",
-                "schema:value": "X-ray Source"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/cu_metal_10K/instrument/source",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "X-ray source",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:source"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:probe"
+                    }
+                  ],
+                  "schema:name": "Probe",
+                  "schema:value": "X-ray"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:xraysourcetype"
+                    }
+                  ],
+                  "schema:name": "X-ray source type",
+                  "schema:value": "X-ray Source"
+                }
+              ]
+            }
+          ]
         },
         {
           "@id": "https://w3id.org/cdif/testing/cu_metal_10K/used/xraymonochromator",
@@ -219,59 +227,65 @@
             "schema:Thing",
             "prov:Entity"
           ],
-          "schema:instrument": {
-            "@id": "https://w3id.org/cdif/testing/cu_metal_10K/instrument/xraymonochromator",
-            "@type": [
-              "schema:Product",
-              "schema:Thing"
-            ],
-            "schema:name": "monochromator",
-            "schema:additionalType": [
-              {
-                "@id": "xas:xraymonochromator"
-              }
-            ],
-            "schema:additionalProperty": [
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:dspacing"
-                  }
-                ],
-                "schema:name": "monochromator d-spacing",
-                "schema:value": "3.135301",
-                "schema:unitText": "Angstroms"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:reflectionplane"
-                  }
-                ],
-                "schema:name": "reflection plane",
-                "schema:value": "1 1 1"
-              },
-              {
-                "@type": [
-                  "schema:PropertyValue"
-                ],
-                "schema:propertyID": [
-                  {
-                    "@id": "xas:monochromatortype"
-                  }
-                ],
-                "schema:name": "monochromator type",
-                "schema:value": ":unav",
-                "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
-              }
-            ]
-          }
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/cu_metal_10K/instrument/xraymonochromator",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": "monochromator",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:xraymonochromator"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:additionalProperty": [
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:dspacing"
+                    }
+                  ],
+                  "schema:name": "monochromator d-spacing",
+                  "schema:value": "3.135301",
+                  "schema:unitText": "Angstroms"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:reflectionplane"
+                    }
+                  ],
+                  "schema:name": "reflection plane",
+                  "schema:value": "1 1 1"
+                },
+                {
+                  "@type": [
+                    "schema:PropertyValue"
+                  ],
+                  "schema:propertyID": [
+                    {
+                      "@id": "xas:monochromatortype"
+                    }
+                  ],
+                  "schema:name": "monochromator type",
+                  "schema:value": ":unav",
+                  "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
+                }
+              ]
+            }
+          ]
         }
       ],
       "schema:additionalProperty": [
