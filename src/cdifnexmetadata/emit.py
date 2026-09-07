@@ -98,9 +98,9 @@ XDI_MEDIA_TYPE = "application/x-xdi"
 #: UNKNOWN, not a plausible default. The RML pipeline writes
 #: "Synchrotron X-ray Source" for a missing source type, which is true of
 #: every file in this corpus and is still an assertion no file made. A
-#: reader can act on "unknown"; it cannot tell an asserted default from a
+#: reader can act on a sentinel; it cannot tell an asserted default from a
 #: recorded fact.
-UNKNOWN = "unknown"
+UNKNOWN = ":unav"
 
 #: What to report for a source type no file recorded.
 #:
@@ -140,7 +140,27 @@ DEFAULT_BASE = "https://w3id.org/cdif/testing"
 
 #: Sentinel conventions, shared with the XDI converter so both bindings
 #: produce the same shape of "we looked and it was not there".
-MISSING_TEXT = "Missing"
+#:
+#: The two text sentinels are DataCite's standard unknown-value codes
+#: (schema 4.7, appendix 3), adopted 2026-09-07. Both are ":unav" -- value
+#: unavailable, possibly unknown -- which is what this tool can honestly say:
+#: it read the file and the value was not in it. DataCite's ":unkn" asserts
+#: something stronger, that the value is KNOWN to be unknown, and nothing
+#: here establishes that.
+#:
+#: Two names for one string on purpose. The call sites still record which
+#: kind of gap they found, and DataCite does distinguish them, so if the
+#: distinction is ever worth making in the output the names are already
+#: where they need to be.
+#:
+#: A leading colon is what makes these safe as literals: JSON-LD reads
+#: "prefix:local" as a compact IRI only when the prefix starts with a
+#: letter, so ":unav" stays a string. It is NOT safe in an IRI slot -- an
+#: @id of ":unav" is resolved against the document base and silently becomes
+#: something like "https://example.org/:unav", a fabricated URL that differs
+#: per document. Where a profile requires a URI, use OGC_NIL_MISSING, which
+#: is a real dereferenceable IRI meaning the same thing.
+MISSING_TEXT = ":unav"
 OGC_NIL_MISSING = "http://www.opengis.net/def/nil/OGC/0/missing"
 
 #: HDF5 dtype -> XSD. Deliberately coarse: CDIF wants to know whether a

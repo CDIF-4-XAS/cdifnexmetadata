@@ -199,9 +199,26 @@ mode, the reflection plane and the d-spacing unit are determined by an
 XDI file without being stated in it. Each derived value records in its
 `note` where it came from.
 
-**Sentinels where a profile requires what a file omits** — `unknown`, or
-the OGC nil URI, with a description saying it was not recorded. A
-missing source type becomes `Synchrotron X-ray Source` only where the
+**Sentinels where a profile requires what a file omits**, with a
+description saying it was not recorded. Which sentinel depends on the
+shape of the slot, not on the kind of gap:
+
+| the profile requires | written as |
+|---|---|
+| text (a name, a title) | `:unav` |
+| a number or an enumerated value | `:unav` |
+| a URI | `http://www.opengis.net/def/nil/OGC/0/missing` |
+
+`:unav` is DataCite's *value unavailable, possibly unknown* (schema 4.7,
+appendix 3) — what this tool can honestly say, having read the file and
+not found the value. It stays a plain string in JSON-LD because the
+leading colon means it is not a compact IRI. That is also why it must
+never be used where a URI is required: in an `@id` it is resolved
+against the document base and silently becomes a fabricated URL like
+`https://example.org/:unav`, which nothing rejects because it is a valid
+IRI. The OGC nil URI is a real dereferenceable IRI for exactly that slot.
+
+A missing source type becomes `Synchrotron X-ray Source` only where the
 file declares XAS; an `NXtomo` file may well have been measured at a
 synchrotron, but nothing in it says so.
 

@@ -103,12 +103,36 @@ upstream by `build_crosswalk.py`. Its absence is not an error.
 
 ## Sentinel values
 
-Aligned with the CDIF-XAS pipeline (`smrgeoinfo/cdif-xas`), so documents from
-both tools read consistently:
+Two vocabularies, chosen by the **shape of the slot**, not by the kind of gap:
 
-- `"Missing"` — required text/name field the source didn't supply
-- `"unknown"` — required numeric/enumerated field needing domain-expert input
-- `<http://www.opengis.net/def/nil/OGC/0/missing>` — required URI-shape value
+| slot | sentinel | constant |
+|---|---|---|
+| required **text** field the source didn't supply | `":unav"` | `MISSING_TEXT` |
+| required **numeric/enumerated** field needing expert input | `":unav"` | `UNKNOWN` |
+| required **URI-shaped** value | `<http://www.opengis.net/def/nil/OGC/0/missing>` | `OGC_NIL_MISSING` |
+
+The text codes are DataCite's standard unknown-value codes (schema 4.7,
+appendix 3), adopted 2026-09-07 on request. `:unav` — *value unavailable,
+possibly unknown* — is what this tool can honestly say: it read the file and
+the value was not there. DataCite's `:unkn` claims more (*known* to be
+unknown) and nothing here establishes that. `MISSING_TEXT` and `UNKNOWN` are
+two names for one string; the call sites still record which kind of gap they
+found, and DataCite distinguishes them, so the names are where they need to be
+if the output ever should too.
+
+**A DataCite code must never go in an IRI slot.** JSON-LD reads
+`prefix:local` as a compact IRI only when the prefix starts with a letter, so
+`":unav"` stays a literal — that leading colon is exactly what makes it safe
+as text. In an `@id` it is not an absolute IRI either, so it is resolved
+against the document base and silently becomes something like
+`https://example.org/:unav`: a fabricated URL, different per document,
+that no check rejects because it *is* a syntactically valid IRI. Where a
+profile requires a URI, use `OGC_NIL_MISSING`, a real dereferenceable IRI
+meaning the same thing.
+
+The CDIF-XAS RML pipeline (`smrgeoinfo/cdif-xas`) still writes the older
+`"Missing"` / `"unknown"` text sentinels. Documents from the two tools no
+longer match on these values until it is updated.
 
 Prefer *omitting* an optional field over filling it with a sentinel. Sentinels
 are for fields the profile requires.

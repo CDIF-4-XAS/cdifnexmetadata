@@ -289,7 +289,7 @@
     "@type": [
       "schema:Person"
     ],
-    "schema:name": "Missing"
+    "schema:name": ":unav"
   },
   "schema:measurementTechnique": [
     {
@@ -468,7 +468,7 @@
                   }
                 ],
                 "schema:name": "dspacing",
-                "schema:value": "unknown",
+                "schema:value": ":unav",
                 "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed",
                 "schema:unitText": "Angstrom"
               }

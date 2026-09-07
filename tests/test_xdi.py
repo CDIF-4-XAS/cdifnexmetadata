@@ -592,7 +592,7 @@ def test_the_catalog_record_says_how_it_was_made(tmp_path):
 
 def test_the_creator_belongs_to_the_dataset(tmp_path):
     doc = _emit(tmp_path).document
-    assert doc["schema:creator"]["schema:name"] == "Missing"
+    assert doc["schema:creator"]["schema:name"] == MISSING_TEXT
 
 
 # ---------------------------------------------------------------------------
