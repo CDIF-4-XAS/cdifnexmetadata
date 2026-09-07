@@ -7,9 +7,9 @@ claude.ai chat, a human — can pick up cold without re-deriving what has
 already been established. It is the canonical entry point.
 
 Stable URL:
-<https://github.com/usgin/cdifnexmetadata/blob/main/STATUS.md>
+<https://github.com/CDIF-4-XAS/cdifnexmetadata/blob/main/STATUS.md>
 Raw:
-<https://raw.githubusercontent.com/usgin/cdifnexmetadata/main/STATUS.md>
+<https://raw.githubusercontent.com/CDIF-4-XAS/cdifnexmetadata/main/STATUS.md>
 
 > **If you are an agent reading this:** the section
 > [Established — do not re-derive](#established--do-not-re-derive) is the
@@ -62,7 +62,7 @@ lookup table *is* the SSSOM alignment.
 | | Effort A | Effort B | Effort C |
 |---|---|---|---|
 | **Goal** | NeXus HDF5 → CDIF | Align CDIF XAS vocabulary with NeXus | XDI → CDIF (Dataverse workflow) |
-| **Repo** | `usgin/cdifnexmetadata` (`main`) | `smrgeoinfo/XAS-CDIF` (**`cdifxasRelease1.1`**) | `smrgeoinfo/cdif-xas` (`main`) |
+| **Repo** | `CDIF-4-XAS/cdifnexmetadata` (`main`) | `smrgeoinfo/XAS-CDIF` (**`cdifxasRelease1.1`**) | `smrgeoinfo/cdif-xas` (`main`) |
 | **State** | **Working** — published as `cdifnexmetadata` 0.1.0; reads NeXus and XDI | Analysis + enumeration import done | **Working — 37/37 valid** |
 | **Head** | `0c02ebe` | `2fe64e1` | `b915c51` |
 | **Layer** | 4 (NeXus binding) | 1–2 (concepts + alignment) | 3–4 (serialization + XDI binding) |
@@ -238,7 +238,7 @@ Prefer *omitting* an optional field over filling it with a sentinel.
 
 ---
 
-## Effort A — `usgin/cdifnexmetadata`
+## Effort A — `CDIF-4-XAS/cdifnexmetadata`
 
 Public, CC-BY-4.0, Python ≥3.11. **Stages 1, 1b and 2 implemented and
 tested (189 tests), and it now reads **two input formats**. **The
@@ -572,9 +572,9 @@ are still in flux** than after they stabilise.
 
 | What | Where |
 |---|---|
-| This file | `usgin/cdifnexmetadata` → `STATUS.md` (`main`) |
-| Extractor design | `usgin/cdifnexmetadata` → `docs/DESIGN-2026-07-27.md` (`main`) |
-| Extractor conventions | `usgin/cdifnexmetadata` → `AGENTS.md` (`main`) |
+| This file | `CDIF-4-XAS/cdifnexmetadata` → `STATUS.md` (`main`) |
+| Extractor design | `CDIF-4-XAS/cdifnexmetadata` → `docs/DESIGN-2026-07-27.md` (`main`) |
+| Extractor conventions | `CDIF-4-XAS/cdifnexmetadata` → `AGENTS.md` (`main`) |
 | XAS gap analysis | `smrgeoinfo/XAS-CDIF` → `XAS_Glossary_vs_NeXus_analysis.md` (**`cdifxasRelease1.1`**) |
 | Enumeration importer | `smrgeoinfo/XAS-CDIF` → `tools/import_nexus_enumerations.py` (**`cdifxasRelease1.1`**) |
 | XDI→CDIF pipeline | `smrgeoinfo/cdif-xas` (`main`) |

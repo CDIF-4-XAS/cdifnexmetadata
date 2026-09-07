@@ -15,7 +15,7 @@ cdifnexmetadata scan.nxs spectrum.xdi -o metadata/
 From nothing to validated CDIF metadata:
 
 ```bash
-git clone https://github.com/usgin/cdifnexmetadata
+git clone https://github.com/CDIF-4-XAS/cdifnexmetadata
 cd cdifnexmetadata
 uv sync --all-extras          # --all-extras matters: see below
 ```
@@ -326,7 +326,7 @@ To pin a workflow to an exact revision rather than a release, install
 from a commit -- a SHA cannot move, where a tag can:
 
 ```bash
-pip install "git+https://github.com/usgin/cdifnexmetadata@v0.1.0"
+pip install "git+https://github.com/CDIF-4-XAS/cdifnexmetadata@v0.1.0"
 ```
 
 For development, clone and `uv sync --all-extras` as in the Quickstart.

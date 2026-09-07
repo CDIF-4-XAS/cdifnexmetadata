@@ -42,8 +42,8 @@ dev = [
 cdifnexmetadata = "cdifnexmetadata.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/usgin/cdifnexmetadata"
-Issues = "https://github.com/usgin/cdifnexmetadata/issues"
+Homepage = "https://github.com/CDIF-4-XAS/cdifnexmetadata"
+Issues = "https://github.com/CDIF-4-XAS/cdifnexmetadata/issues"
 
 [build-system]
 requires = ["hatchling"]
