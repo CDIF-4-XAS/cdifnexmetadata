@@ -76,7 +76,14 @@ Carried forward deliberately from the prior codebases surveyed in docs/DESIGN-20
   produces a warning in the result, not an ImportError.
 - **Accumulate, don't raise.** Non-fatal problems go into `warnings: list[str]`
   on the result object.
-- **Detect conformance, don't assert it.** Emit a `dcterms:conformsTo` entry
+- **Detect conformance, don't assert it.** The rule lives in `emit.py`
+  (`profiles = [...]`), and the README carries the same table for users:
+  `core/1.1` always; `discovery/1.1` for a technique, keywords, a time
+  coverage or a facility; `data_description/1.1` for any variable;
+  `data_structure/1.1` for a structure that has components; `xasCore/1.0`
+  for an XAS file whose entries actually carry values. Declaring `NXxas`
+  is necessary but not sufficient -- a claim about content needs the
+  content. Emit a `dcterms:conformsTo` entry
   only when the content satisfies that profile.
 - **Per-profile validation.** Never one monolithic schema — that approach was
   explicitly deprecated in the ADA project after it became unmaintainable.

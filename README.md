@@ -187,8 +187,29 @@ its components; each part references the one it uses by `@id`. A file
 with 26 entries and two layouts can then say which entry has which.
 
 **Conformance is detected, not asserted.** A profile is claimed only
-where the content for it exists. A file with no measured arrays gets
-core and discovery and does not claim `data_description`.
+where the content for it exists, so the `dcterms:conformsTo` list is a
+report of what was found rather than a statement of intent:
+
+| profile | claimed when the document has |
+|---|---|
+| `core/1.1` | always — every document claims it |
+| `discovery/1.1` | a technique, keywords, a time coverage, or a facility |
+| `data_description/1.1` | at least one variable |
+| `data_structure/1.1` | at least one data structure *with components* |
+| `xasCore/1.0` | an XAS file **and** at least one entry carrying values |
+
+A file is XAS if it is XDI, or if a NeXus definition starts with
+`NXxas`. That last row is the one worth understanding: declaring
+`NXxas` is necessary but not sufficient. `xasCore` is a claim about
+content, so an entry that declares the definition and carries none of
+the content must not make the claim — which is the whole point of
+detecting conformance rather than asserting it.
+
+So a file with no measured arrays gets core and discovery and does not
+claim `data_description`; an `NXtomo` file never claims `xasCore` however
+it was measured. If a document claims less than you expect, this table
+is where to look: the missing profile names the content that was not
+found.
 
 **Nothing is silently dropped.** A concept with no CDIF binding is
 emitted as `additionalProperty` with a warning. An unmapped data column
