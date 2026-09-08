@@ -520,7 +520,7 @@ def _variables(
 
     The two are built together because CDIF requires them to reference
     each other: the variable `cdif:uses` the RepresentedVariable that the
-    component `cdif:isDefinedBy_RepresentedVariable` points at. Building
+    component `cdif:isDefinedBy_Variable` points at. Building
     them apart is how that round trip gets broken.
     """
     variables: list[dict] = []
@@ -615,7 +615,7 @@ def _variables(
                 "@type": ["cdi:MeasureComponent"]
                 if not _is_coordinate(local)
                 else ["cdi:DimensionComponent"],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                     "@id": rv_id,
                     "@type": ["cdi:RepresentedVariable"],
                     "schema:name": _readable(local),

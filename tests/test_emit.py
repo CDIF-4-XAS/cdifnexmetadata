@@ -117,7 +117,7 @@ def test_every_variable_round_trips_to_a_structure_component(tmp_path):
     doc = _emit(p, _xas_crosswalk(tmp_path)).document
     used = {u for v in doc["schema:variableMeasured"] for u in v["cdif:uses"]}
     defined = {
-        c["cdif:isDefinedBy_RepresentedVariable"]["@id"]
+        c["cdif:isDefinedBy_Variable"]["@id"]
         for s in _structures(doc)
         for c in s["cdi:has_DataStructureComponent"]
     }
