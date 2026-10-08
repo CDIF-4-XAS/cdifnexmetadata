@@ -56,7 +56,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/263838_PtSn_3_1_EG_1/rv/absorptioncoefficient",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -85,7 +85,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/263838_PtSn_3_1_EG_1/rv/incidentintensity",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -114,7 +114,7 @@
             "@type": [
               "cdi:DimensionComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/263838_PtSn_3_1_EG_1/rv/monochromatorenergy",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -143,7 +143,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/263838_PtSn_3_1_EG_1/rv/referenceintensity",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -172,7 +172,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/263838_PtSn_3_1_EG_1/rv/transmittedintensity",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -201,7 +201,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/263838_PtSn_3_1_EG_1/rv/lnitiref",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -230,7 +230,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/263838_PtSn_3_1_EG_1/rv/time",
               "@type": [
                 "cdi:RepresentedVariable"

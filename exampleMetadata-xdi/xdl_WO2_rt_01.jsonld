@@ -56,7 +56,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/xdl_WO2_rt_01/rv/incidentintensity",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -85,7 +85,7 @@
             "@type": [
               "cdi:DimensionComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/xdl_WO2_rt_01/rv/monochromatorenergy",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -114,7 +114,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/xdl_WO2_rt_01/rv/transmittedintensity",
               "@type": [
                 "cdi:RepresentedVariable"

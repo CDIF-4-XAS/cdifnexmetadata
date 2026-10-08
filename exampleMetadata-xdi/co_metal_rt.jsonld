@@ -56,7 +56,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/absorptioncoefficient",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -85,7 +85,7 @@
             "@type": [
               "cdi:MeasureComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/incidentintensity",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -114,7 +114,7 @@
             "@type": [
               "cdi:DimensionComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/co_metal_rt/rv/monochromatorenergy",
               "@type": [
                 "cdi:RepresentedVariable"
