@@ -179,7 +179,7 @@ concept present, and what shape", which is what the data-structure
 profile needs. The numbers are data.
 
 **HDF5 paths are locators, not indices.** Physical mapping uses
-`cdif:LocatorMapping` with `cdif:locator` = `/entry/instrument/i0/data`.
+`cdif:LocatorMapping` with `cdi:locator` = `/entry/instrument/i0/data`.
 
 **Structures sit on the distribution.** The JSON Schema admits
 `cdi:isStructuredBy` only on a distribution item. Each is inline with

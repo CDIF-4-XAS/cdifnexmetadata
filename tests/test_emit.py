@@ -133,7 +133,7 @@ def test_hdf5_paths_are_locators_not_indices(tmp_path):
     mapping = _structures(doc)[0][
         "cdi:has_DataStructureComponent"][0]["cdif:hasPhysicalMapping"]
     assert mapping["@type"] == ["cdif:LocatorMapping"]
-    assert mapping["cdif:locator"].startswith("/scan1/")
+    assert mapping["cdi:locator"].startswith("/scan1/")
     assert "cdif:index" not in mapping
 
 

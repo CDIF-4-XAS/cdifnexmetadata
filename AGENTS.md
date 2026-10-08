@@ -164,7 +164,7 @@ Library. A crosswalk row for one would map something that does not exist.
 
 ## Locators belong to the mapping, not the variable
 
-The path a value came from is emitted as `cdif:locator` inside
+The path a value came from is emitted as `cdi:locator` inside
 `cdif:hasPhysicalMapping` on the DataStructureComponent, typed
 `cdif:LocatorMapping`, with `cdif:formats_InstanceVariable` pointing back
 at the variable. Do not move it onto the InstanceVariable: in DDI-CDI

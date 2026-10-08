@@ -206,7 +206,7 @@ these, as did an earlier pass in this one:
 
 | Decision | Note |
 |---|---|
-| `cdif:LocatorMapping` + `cdif:locator` for HDF5 internal paths | A path is a locator, not a column index; `cdif:TextMapping` + `cdif:index` is the tabular analog and does not apply |
+| `cdif:LocatorMapping` + `cdi:locator` for HDF5 internal paths | A path is a locator, not a column index; `cdif:TextMapping` + `cdif:index` is the tabular analog and does not apply |
 | Multi-entry file = **archive of parts**, one part per `NXentry` | Shared metadata by reference, not repeated; one `cdi:DataStructure` per distinct (signal, axes, shapes, dtypes) signature, referenced by every matching entry |
 | Units → **QUDT/UCUM normalization attempted** | Source string always kept verbatim in `schema:unitText`; codes added only on confident match; unmatched recorded in warnings |
 | **Detect** conformance, don't assert it | Emit a `dcterms:conformsTo` entry only when content satisfies that profile |
@@ -313,7 +313,7 @@ warning.
 
 Arrays become `schema:variableMeasured` plus a DataStructure component;
 scalars become instrument, sample or event context. HDF5 paths are
-`cdif:LocatorMapping` with `cdif:locator`, never indices.
+`cdif:LocatorMapping` with `cdi:locator`, never indices.
 
 Validating against the real profile found five defects worth recording,
 because each would silently produce a wrong or lossy document:

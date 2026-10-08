@@ -603,7 +603,7 @@ def _variables(
                 mapping = {
                     "@id": f"ex:DV/{entry_slug}/pm/{local}",
                     "@type": ["cdif:LocatorMapping"],
-                    "cdif:locator": cv.source_path,
+                    "cdi:locator": cv.source_path,
                     "cdif:physicalDataType": _xsd_for(cv.dtype),
                 }
             # The back-reference closes the loop CDIF expects: the

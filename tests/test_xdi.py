@@ -429,7 +429,7 @@ def test_a_text_column_gets_a_text_mapping_with_its_field_width(tmp_path):
     assert all("cdif:index" in m for m in mappings)
     # No locator: a column position is not a path, and claiming one
     # would send a reader looking for something that is not there.
-    assert not any("cdif:locator" in m for m in mappings)
+    assert not any("cdi:locator" in m for m in mappings)
     widths = [(m.get("cdi:minimumLength"), m.get("cdi:maximumLength"))
               for m in mappings]
     assert all(w[0] is not None and w[1] is not None for w in widths)
