@@ -6,7 +6,7 @@ path = [
     "AGENTS.md",
     "DESIGN.md",
 ]
-SPDX-FileCopyrightText = "2026 USGIN"
+SPDX-FileCopyrightText = "Copyright (c) 2022-2026 Committee on Data of the International Science Council (CODATA)"
 SPDX-License-Identifier = "CC-BY-4.0"
 
 [[annotations]]
@@ -19,10 +19,10 @@ SPDX-License-Identifier = "CC0-1.0"
 
 [[annotations]]
 path = "src/**"
-SPDX-FileCopyrightText = "2026 USGIN"
+SPDX-FileCopyrightText = "Copyright (c) 2022-2026 Committee on Data of the International Science Council (CODATA)"
 SPDX-License-Identifier = "CC-BY-4.0"
 
 [[annotations]]
 path = "tests/**"
-SPDX-FileCopyrightText = "2026 USGIN"
+SPDX-FileCopyrightText = "Copyright (c) 2022-2026 Committee on Data of the International Science Council (CODATA)"
 SPDX-License-Identifier = "CC-BY-4.0"
