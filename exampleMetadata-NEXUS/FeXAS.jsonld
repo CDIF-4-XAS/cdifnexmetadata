@@ -65,7 +65,7 @@
                 "@type": [
                   "cdi:MeasureComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/absorptioncoefficient",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -80,7 +80,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/FeFoil.001/data/mutrans",
+                  "cdi:locator": "/FeFoil.001/data/mutrans",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/absorptioncoefficient"
@@ -92,7 +92,7 @@
                 "@type": [
                   "cdi:MeasureComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/fluorescenceabsorptioncoefficient",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -107,7 +107,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/FeFoil.001/data/mufluor",
+                  "cdi:locator": "/FeFoil.001/data/mufluor",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/fluorescenceabsorptioncoefficient"
@@ -119,7 +119,7 @@
                 "@type": [
                   "cdi:MeasureComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/fluorescenceintensity",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -134,7 +134,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/FeFoil.001/instrument/ifluor/data",
+                  "cdi:locator": "/FeFoil.001/instrument/ifluor/data",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/fluorescenceintensity"
@@ -146,7 +146,7 @@
                 "@type": [
                   "cdi:MeasureComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/incidentintensity",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -161,7 +161,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/FeFoil.001/instrument/i0/data",
+                  "cdi:locator": "/FeFoil.001/instrument/i0/data",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/incidentintensity"
@@ -173,7 +173,7 @@
                 "@type": [
                   "cdi:DimensionComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/monochromatorenergy",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -188,7 +188,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/FeFoil.001/instrument/monochromator/energy",
+                  "cdi:locator": "/FeFoil.001/instrument/monochromator/energy",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/monochromatorenergy"
@@ -200,7 +200,7 @@
                 "@type": [
                   "cdi:MeasureComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/transmittedintensity",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -215,7 +215,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/FeFoil.001/instrument/itrans/data",
+                  "cdi:locator": "/FeFoil.001/instrument/itrans/data",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/transmittedintensity"
@@ -312,7 +312,7 @@
                 "@type": [
                   "cdi:MeasureComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/fluorescenceabsorptioncoefficient",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -327,7 +327,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/Fe_a2n.001/data/mufluor",
+                  "cdi:locator": "/Fe_a2n.001/data/mufluor",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/fluorescenceabsorptioncoefficient"
@@ -339,7 +339,7 @@
                 "@type": [
                   "cdi:MeasureComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/fluorescenceintensity",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -354,7 +354,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/Fe_a2n.001/instrument/ifluor/data",
+                  "cdi:locator": "/Fe_a2n.001/instrument/ifluor/data",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/fluorescenceintensity"
@@ -366,7 +366,7 @@
                 "@type": [
                   "cdi:MeasureComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/incidentintensity",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -381,7 +381,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/Fe_a2n.001/instrument/i0/data",
+                  "cdi:locator": "/Fe_a2n.001/instrument/i0/data",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/incidentintensity"
@@ -393,7 +393,7 @@
                 "@type": [
                   "cdi:DimensionComponent"
                 ],
-                "cdif:isDefinedBy_RepresentedVariable": {
+                "cdif:isDefinedBy_Variable": {
                   "@id": "https://w3id.org/cdif/testing/FeXAS/rv/monochromatorenergy",
                   "@type": [
                     "cdi:RepresentedVariable"
@@ -408,7 +408,7 @@
                   "@type": [
                     "cdif:LocatorMapping"
                   ],
-                  "cdif:locator": "/Fe_a2n.001/instrument/monochromator/energy",
+                  "cdi:locator": "/Fe_a2n.001/instrument/monochromator/energy",
                   "cdif:physicalDataType": "xsd:decimal",
                   "cdif:formats_InstanceVariable": {
                     "@id": "ex:DV/FeXAS/iv/monochromatorenergy"

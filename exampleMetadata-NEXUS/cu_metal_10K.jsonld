@@ -56,7 +56,7 @@
             "@type": [
               "cdi:DimensionComponent"
             ],
-            "cdif:isDefinedBy_RepresentedVariable": {
+            "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/cu_metal_10K/rv/monochromatorenergy",
               "@type": [
                 "cdi:RepresentedVariable"
@@ -71,7 +71,7 @@
               "@type": [
                 "cdif:LocatorMapping"
               ],
-              "cdif:locator": "/entry/instrument/monochromator/energy",
+              "cdi:locator": "/entry/instrument/monochromator/energy",
               "cdif:physicalDataType": "xsd:decimal",
               "cdif:formats_InstanceVariable": {
                 "@id": "ex:DV/cu_metal_10K/iv/monochromatorenergy"
