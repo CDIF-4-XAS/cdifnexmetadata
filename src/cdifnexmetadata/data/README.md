@@ -6,7 +6,7 @@ Two kinds of file live here, maintained differently.
 |------|------|
 | `cdifxas-to-nexus.sssom.tsv` | copy of an upstream file — **do not edit here** |
 | `xdi-to-cdifxas.sssom.tsv` | copy of an upstream file — **do not edit here** |
-| `xdi-to-cdif.sssom.tsv` | copy of an upstream file — **do not edit here** |
+| `xdi-to-schemaorg.sssom.tsv` | copy of an upstream file — **do not edit here** |
 | `cdifsas-to-nexus.sssom.tsv` | authored in this repo — edit here |
 | `legacy-paths.tsv` | authored in this repo — edit here |
 | `cdifxas-units.tsv` | copy of an upstream file — **do not edit here** |
@@ -15,7 +15,7 @@ Two kinds of file live here, maintained differently.
 
 **These files are copies. Do not edit them here.**
 
-Upstream: <https://github.com/smrgeoinfo/XAS-CDIF/tree/cdifxasRelease1.1/crosswalk>
+Upstream: <https://github.com/CDIF-4-XAS/XAS-CDIF/tree/cdifxasRelease1.1/crosswalk>
 Curated and validated by `crosswalk/build_crosswalk.py` in that repo,
 which checks every subject against the CDIF XAS glossary, every NeXus
 path against the live NXDL, and every XDI key against the concept keys
@@ -42,9 +42,9 @@ yet, copy them across directly rather than refreshing.
 | `cdifxas-units.tsv` | CDIF XAS concept -> QUDT unit. Not a mapping between vocabularies but a fact the glossary asserts about a concept, so not SSSOM. Read where a file records no unit. |
 | `cdifxas-to-nexus.sssom.tsv` | CDIF XAS concept -> NeXus path. Used by the mapper. |
 | `xdi-to-cdifxas.sssom.tsv` | XDI token -> CDIF XAS concept. The other binding; here for reference. |
-| `xdi-to-cdif.sssom.tsv` | XDI extension header -> **schema.org** property. Bibliographic and rights headers that CDIF models with schema.org rather than with an XAS concept. Here for reference; see below. |
+| `xdi-to-schemaorg.sssom.tsv` | XDI extension header -> **schema.org** property. Bibliographic and rights headers that CDIF models with schema.org rather than with an XAS concept. Here for reference; see below. |
 
-### `xdi-to-cdif.sssom.tsv`, and why most of it becomes prose
+### `xdi-to-schemaorg.sssom.tsv`, and why most of it becomes prose
 
 `map/xdi.py` reads it into `ConceptRecord.bibliographic`, kept apart
 from `values` because a schema.org property is a serialization target

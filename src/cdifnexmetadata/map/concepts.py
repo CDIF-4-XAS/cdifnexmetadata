@@ -113,7 +113,7 @@ class ConceptRecord:
     #: property URI everywhere the code means "a CDIF XAS concept", which
     #: is the fusion of concept with binding this module exists to avoid.
     #:
-    #: Populated only by the XDI binding, from `xdi-to-cdif.sssom.tsv`.
+    #: Populated only by the XDI binding, from `xdi-to-schemaorg.sssom.tsv`.
     #: A NeXus file carries no bibliographic headers.
     bibliographic: dict[str, ConceptValue] = field(default_factory=dict)
     #: Raw `Publication.*` headers other than the DOI, in file order.

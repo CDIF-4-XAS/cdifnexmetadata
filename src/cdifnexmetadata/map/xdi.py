@@ -50,7 +50,7 @@ DEFAULT_XDI_CROSSWALK = DATA_DIR / "xdi-to-cdifxas.sssom.tsv"
 #: while the other thirty-one point at the CDIF XAS glossary. The split
 #: is a property of the standard, not a filing decision, so it is
 #: preserved here rather than merged on load.
-DEFAULT_XDI_CDIF_CROSSWALK = DATA_DIR / "xdi-to-cdif.sssom.tsv"
+DEFAULT_XDI_CDIF_CROSSWALK = DATA_DIR / "xdi-to-schemaorg.sssom.tsv"
 
 #: Two concepts the XAS profile requires that no XDI header carries.
 #:
@@ -265,7 +265,7 @@ def map_xdi(
             # diverted here.
             #
             # The crosswalk is consulted before the Publication namespace
-            # rule below, so a row in xdi-to-cdif.sssom.tsv decides which
+            # rule below, so a row in xdi-to-schemaorg.sssom.tsv decides which
             # header is the author and which the affiliation. Move that
             # row upstream -- to `Publication.author`, say -- and this
             # follows without a code change. What the emitter then does

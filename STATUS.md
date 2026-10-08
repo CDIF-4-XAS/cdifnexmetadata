@@ -62,7 +62,7 @@ lookup table *is* the SSSOM alignment.
 | | Effort A | Effort B | Effort C |
 |---|---|---|---|
 | **Goal** | NeXus HDF5 → CDIF | Align CDIF XAS vocabulary with NeXus | XDI → CDIF (Dataverse workflow) |
-| **Repo** | `CDIF-4-XAS/cdifnexmetadata` (`main`) | `smrgeoinfo/XAS-CDIF` (**`cdifxasRelease1.1`**) | `smrgeoinfo/cdif-xas` (`main`) |
+| **Repo** | `CDIF-4-XAS/cdifnexmetadata` (`main`) | `CDIF-4-XAS/XAS-CDIF` (**`cdifxasRelease1.1`**) | `smrgeoinfo/cdif-xas` (`main`) |
 | **State** | **Working** — published as `cdifnexmetadata` 0.1.0; reads NeXus and XDI | Analysis + enumeration import done | **Working — 37/37 valid** |
 | **Head** | `0c02ebe` | `2fe64e1` | `b915c51` |
 | **Layer** | 4 (NeXus binding) | 1–2 (concepts + alignment) | 3–4 (serialization + XDI binding) |
@@ -499,7 +499,7 @@ it says so.
 
 ## Effort B — CDIF XAS vocabulary
 
-In `smrgeoinfo/XAS-CDIF`, branch **`cdifxasRelease1.1`** (not `main`).
+In `CDIF-4-XAS/XAS-CDIF`, branch **`cdifxasRelease1.1`** (not `main`).
 
 ### Done
 
@@ -575,8 +575,8 @@ are still in flux** than after they stabilise.
 | This file | `CDIF-4-XAS/cdifnexmetadata` → `STATUS.md` (`main`) |
 | Extractor design | `CDIF-4-XAS/cdifnexmetadata` → `docs/DESIGN-2026-07-27.md` (`main`) |
 | Extractor conventions | `CDIF-4-XAS/cdifnexmetadata` → `AGENTS.md` (`main`) |
-| XAS gap analysis | `smrgeoinfo/XAS-CDIF` → `XAS_Glossary_vs_NeXus_analysis.md` (**`cdifxasRelease1.1`**) |
-| Enumeration importer | `smrgeoinfo/XAS-CDIF` → `tools/import_nexus_enumerations.py` (**`cdifxasRelease1.1`**) |
+| XAS gap analysis | `CDIF-4-XAS/XAS-CDIF` → `XAS_Glossary_vs_NeXus_analysis.md` (**`cdifxasRelease1.1`**) |
+| Enumeration importer | `CDIF-4-XAS/XAS-CDIF` → `tools/import_nexus_enumerations.py` (**`cdifxasRelease1.1`**) |
 | XDI→CDIF pipeline | `smrgeoinfo/cdif-xas` (`main`) |
 | CDIF profile schemas + SHACL | `Cross-Domain-Interoperability-Framework/metadataBuildingBlocks` → `_sources/profiles/` |
 | NeXus definitions (use this) | `XraySpectroscopy/nexus_definitions` (`main`) |

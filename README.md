@@ -146,7 +146,7 @@ file yields 22 concepts and 4 variables.
 | `legacy-paths.tsv` | writer conventions that diverge from the standard |
 
 The first two are copies. Their master versions live in
-[XAS-CDIF](https://github.com/smrgeoinfo/XAS-CDIF) and are built there
+[XAS-CDIF](https://github.com/CDIF-4-XAS/XAS-CDIF) and are built there
 by `crosswalk/build_crosswalk.py`; the copies exist so this package
 works offline and so a release is pinned to a known crosswalk revision.
 Re-download them with
@@ -528,7 +528,7 @@ python exampleMetadata-NEXUS/generate.py --profile-dir ../XAS-CDIF/release
 ```
 
 **`exampleMetadata-xdi/`** — the 55 XDI files in
-[`XAS-CDIF/exampleData`](https://github.com/smrgeoinfo/XAS-CDIF) run
+[`XAS-CDIF/exampleData`](https://github.com/CDIF-4-XAS/XAS-CDIF) run
 through this pipeline, so the output can be compared against what the
 production RML pipeline makes of the same bytes. Both sets validate
 55/55; the interesting part is what each says where a file is silent.
