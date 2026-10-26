@@ -102,6 +102,14 @@
       "schema:inDefinedTermSet": "http://purl.org/pan-science/PaNET/PaNET.owl",
       "schema:name": "X-Ray Absorption Spectroscopy",
       "schema:termCode": "XAS"
+    },
+    {
+      "@type": [
+        "schema:DefinedTerm"
+      ],
+      "schema:name": ":unav",
+      "schema:inDefinedTermSet": "nxs:Field/NXxas/ENTRY/DATA/mode",
+      "schema:description": "detection mode not recorded in the source file; the profile requires one, so it is reported as unknown"
     }
   ],
   "prov:wasGeneratedBy": [
@@ -118,6 +126,33 @@
       ],
       "schema:name": "acquisition of NXxas-manual-sketch",
       "prov:used": [
+        {
+          "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/used/beamline",
+          "@type": [
+            "schema:Thing",
+            "prov:Entity"
+          ],
+          "schema:instrument": [
+            {
+              "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/instrument/beamline",
+              "@type": [
+                "schema:Product",
+                "schema:Thing",
+                "prov:Entity"
+              ],
+              "schema:name": ":unav",
+              "schema:additionalType": [
+                {
+                  "@id": "xas:beamline"
+                },
+                {
+                  "@id": "wd:Q3099911"
+                }
+              ],
+              "schema:description": "beamline not named in the source file; the profile requires one, so its name is reported as unknown rather than guessed"
+            }
+          ]
+        },
         {
           "@id": "https://w3id.org/cdif/testing/NXxas-manual-sketch/used/source",
           "@type": [
@@ -151,7 +186,7 @@
                       "@id": "xas:probe"
                     }
                   ],
-                  "schema:name": "probe",
+                  "schema:name": "Probe",
                   "schema:value": ":unav",
                   "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
                 },
@@ -164,7 +199,7 @@
                       "@id": "xas:xraysourcetype"
                     }
                   ],
-                  "schema:name": "xraysourcetype",
+                  "schema:name": "X-ray source type",
                   "schema:value": "Synchrotron X-ray Source",
                   "schema:description": "not recorded in the source file; an XAS measurement is made at a synchrotron, so the technique supplies this where the file does not"
                 }
@@ -205,7 +240,7 @@
                       "@id": "xas:monochromatortype"
                     }
                   ],
-                  "schema:name": "monochromator type",
+                  "schema:name": "monochromator crystal",
                   "schema:value": ":unav",
                   "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
                 },
@@ -218,7 +253,7 @@
                       "@id": "xas:dspacing"
                     }
                   ],
-                  "schema:name": "dspacing",
+                  "schema:name": "monochromator d-spacing",
                   "schema:value": ":unav",
                   "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed",
                   "schema:unitText": "Angstrom"
@@ -232,7 +267,7 @@
                       "@id": "xas:reflectionplane"
                     }
                   ],
-                  "schema:name": "reflectionplane",
+                  "schema:name": "reflection plane",
                   "schema:value": ":unav",
                   "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
                 }

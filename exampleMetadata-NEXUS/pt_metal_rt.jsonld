@@ -387,7 +387,7 @@
                       "@id": "xas:monochromatortype"
                     }
                   ],
-                  "schema:name": "monochromator type",
+                  "schema:name": "monochromator crystal",
                   "schema:value": ":unav",
                   "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
                 }

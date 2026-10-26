@@ -102,6 +102,14 @@
       "schema:inDefinedTermSet": "http://purl.org/pan-science/PaNET/PaNET.owl",
       "schema:name": "X-Ray Absorption Spectroscopy",
       "schema:termCode": "XAS"
+    },
+    {
+      "@type": [
+        "schema:DefinedTerm"
+      ],
+      "schema:name": ":unav",
+      "schema:inDefinedTermSet": "nxs:Field/NXxas/ENTRY/DATA/mode",
+      "schema:description": "detection mode not recorded in the source file; the profile requires one, so it is reported as unknown"
     }
   ],
   "schema:contributor": [
@@ -279,7 +287,7 @@
                       "@id": "xas:monochromatortype"
                     }
                   ],
-                  "schema:name": "monochromator type",
+                  "schema:name": "monochromator crystal",
                   "schema:value": ":unav",
                   "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
                 }

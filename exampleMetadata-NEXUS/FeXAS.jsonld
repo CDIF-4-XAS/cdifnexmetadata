@@ -2590,7 +2590,7 @@
                       "@id": "xas:monochromatortype"
                     }
                   ],
-                  "schema:name": "monochromator type",
+                  "schema:name": "monochromator crystal",
                   "schema:value": ":unav",
                   "schema:description": "not recorded in the source file; the profile requires this property, so it is reported as unknown rather than omitted or guessed"
                 }
@@ -2770,6 +2770,9 @@
       },
       {
         "@id": "https://w3id.org/cdif/data_structure/1.1"
+      },
+      {
+        "@id": "https://w3id.org/cdif/manifest/1.1"
       },
       {
         "@id": "https://w3id.org/cdif/xasCore/1.0"
