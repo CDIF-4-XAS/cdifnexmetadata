@@ -784,7 +784,10 @@ def _with_sentinels(kind: str, props: list, is_xas: bool = False) -> list:
         sentinel: dict[str, Any] = {
             "@type": ["schema:PropertyValue"],
             "schema:propertyID": [{"@id": f"xas:{prop}"}],
-            "schema:name": _readable(prop),
+            # The label a value read from the file would get. The profile
+            # matches the probe on schema:name "Probe", so a sentinel
+            # named "probe" failed it.
+            "schema:name": CONCEPT_SLOTS[f"cdifxas:{prop}"].label,
             "schema:value": value,
             "schema:description": why,
         }
@@ -958,6 +961,15 @@ def _instruments(
     out: list[dict[str, Any]] = []
     if buckets["instrument"]:
         out.append(used(buckets["instrument"], BEAMLINE_TYPE, []))
+    elif is_xas:
+        # The profile requires a named beamline as well, so an XAS file
+        # that names none gets the same treatment as a silent source.
+        beamline = used(UNKNOWN, BEAMLINE_TYPE, [])
+        beamline["schema:instrument"][0]["schema:description"] = (
+            "beamline not named in the source file; the profile requires "
+            "one, so its name is reported as unknown rather than guessed"
+        )
+        out.append(beamline)
     # An XAS document must describe a source and a monochromator whether
     # or not the file said anything about them -- the profile requires
     # both peers. Emitting them with sentinels states what is unknown;
@@ -1275,6 +1287,19 @@ def emit_document(
             "schema:name": mode,
             "schema:inDefinedTermSet": NXXAS_MODE_TERMSET,
         })
+    if is_xas and not modes:
+        # The profile requires a detection mode. A file that records none
+        # gets the unknown sentinel, as a silent source or monochromator
+        # does, rather than a mode guessed from its detectors.
+        technique.append({
+            "@type": ["schema:DefinedTerm"],
+            "schema:name": UNKNOWN,
+            "schema:inDefinedTermSet": NXXAS_MODE_TERMSET,
+            "schema:description": (
+                "detection mode not recorded in the source file; the "
+                "profile requires one, so it is reported as unknown"
+            ),
+        })
     if technique:
         doc["schema:measurementTechnique"] = technique
 
@@ -1397,6 +1422,11 @@ def emit_document(
         profiles.append("data_description/1.1")
     if structures:
         profiles.append("data_structure/1.1")
+    if parts:
+        # A distribution with parts is a manifest, and xasDocument
+        # requires the claim whenever schema:hasPart is present -- FeXAS
+        # stopped validating when that rule arrived.
+        profiles.append("manifest/1.1")
     if is_xas and any(r.values for r in records):
         # Declaring NXxas is necessary but not sufficient. xasCore is a
         # claim about content, so an entry that declares the definition

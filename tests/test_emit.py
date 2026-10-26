@@ -323,6 +323,21 @@ def test_profiles_are_claimed_only_where_the_content_exists(tmp_path):
     assert "data_description/1.1" in result.profiles
     assert "data_structure/1.1" in result.profiles
     assert "discovery/1.1" in result.profiles
+    # One entry, so no parts and no manifest.
+    assert "manifest/1.1" not in result.profiles
+
+
+def test_a_file_of_parts_claims_the_manifest_profile(tmp_path):
+    """xasDocument requires manifest/1.1 whenever a distribution has
+    schema:hasPart. FeXAS stopped validating without it."""
+    p = tmp_path / "f.nxs"
+    with h5py.File(p, "w") as f:
+        for i in range(2):
+            _scan(f, f"scan{i}")
+
+    result = _emit(p, _xas_crosswalk(tmp_path))
+    assert result.document["schema:distribution"][0]["schema:hasPart"]
+    assert "manifest/1.1" in result.profiles
 
 
 def test_declared_profiles_match_what_is_written_into_the_record(tmp_path):
@@ -363,6 +378,20 @@ def test_detection_mode_is_collected_across_entries_not_only_shared(tmp_path):
         if t.get("schema:inDefinedTermSet") == NXXAS_MODE_TERMSET
     }
     assert modes == {"Transmission", "Fluorescence"}
+
+
+def test_an_xas_file_with_no_detection_mode_reports_it_unknown(tmp_path):
+    """The profile requires a detection-mode term. cu_metal_10K records
+    none, so the mode is reported as unknown rather than left out."""
+    p = tmp_path / "f.nxs"
+    with h5py.File(p, "w") as f:
+        _scan(f, "scan1")
+
+    doc = _emit(p, _xas_crosswalk(tmp_path)).document
+    modes = [t for t in doc["schema:measurementTechnique"]
+             if t.get("schema:inDefinedTermSet") == NXXAS_MODE_TERMSET]
+    assert [t["schema:name"] for t in modes] == [":unav"]
+    assert modes[0]["schema:description"]
 
 
 def test_mandated_keywords_carry_the_role_tag_the_profile_reads(tmp_path):
@@ -586,6 +615,40 @@ def test_beamline_source_and_monochromator_are_separate_peers(tmp_path):
     probe = next(pv for pv in source["schema:additionalProperty"]
                  if pv["schema:propertyID"][0]["@id"] == "xas:probe")
     assert probe["schema:name"] == "Probe"   # the profile matches on this
+
+
+def test_an_xas_file_naming_no_beamline_reports_it_unknown(tmp_path):
+    """The profile requires a named beamline. A file whose NXinstrument
+    has no name gets one with the unknown sentinel, as a silent source
+    does, rather than no beamline at all."""
+    p = tmp_path / "f.nxs"
+    with h5py.File(p, "w") as f:
+        del _scan(f, "scan1")["instrument/name"]
+
+    used = _emit(p, _xas_crosswalk(tmp_path)).document[
+        "prov:wasGeneratedBy"][0]["prov:used"]
+    beamline = used[0]["schema:instrument"][0]
+    assert beamline["schema:additionalType"][0]["@id"] == "xas:beamline"
+    assert beamline["schema:name"] == ":unav"
+    assert beamline["schema:description"]
+
+
+def test_a_sentinel_probe_is_named_as_a_read_one_would_be(tmp_path):
+    """The profile matches the probe on schema:name "Probe". A sentinel
+    named "probe" made every file without a recorded probe fail."""
+    p = tmp_path / "f.nxs"
+    with h5py.File(p, "w") as f:
+        _scan(f, "scan1")
+
+    used = _emit(p, _xas_crosswalk(tmp_path)).document[
+        "prov:wasGeneratedBy"][0]["prov:used"]
+    source = next(u["schema:instrument"][0] for u in used
+                  if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
+                  == "xas:source")
+    probe = next(pv for pv in source["schema:additionalProperty"]
+                 if pv["schema:propertyID"][0]["@id"] == "xas:probe")
+    assert probe["schema:value"] == ":unav"
+    assert probe["schema:name"] == "Probe"
 
 
 def test_property_values_are_strings_even_when_the_file_says_otherwise(

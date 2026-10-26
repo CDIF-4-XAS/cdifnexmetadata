@@ -55,12 +55,12 @@ repository generates from `exampleData/` and from the XAS-CDIF XDI
 corpus respectively, so you can compare against them. Regenerate the
 first with `uv run python exampleMetadata-NEXUS/generate.py`.
 
-Not every example validates, on purpose. `cu_metal_10K.nxs` declares
-`NXxas` and carries almost none of it, and `NXxas-manual-sketch.hdf5`
-follows a layout from the NeXus manual that no real file uses. Both
-fail, and the failures are the point — an examples directory where
-everything passes tells you nothing about what happens when something
-is wrong.
+Two examples are thin on purpose. `cu_metal_10K.nxs` declares `NXxas`
+and carries almost none of it, and `NXxas-manual-sketch.hdf5` follows a
+layout from the NeXus manual that no real file uses. Both validate only
+because every value the profile requires and the file lacks is emitted
+as `:unav`, with a description saying so. That is the point: they show
+what a gap looks like when it is stated rather than guessed.
 
 ## What it does, concretely
 
@@ -520,8 +520,8 @@ the document generated from each, with a README in both. They span what
 the extractor actually meets rather than only what it handles well: a
 26-entry XAS file that validates against a full profile, a real SAS
 beamline file that departs from its own declared definition, an XDI
-file, a deliberately thin file that *fails*, and two techniques no
-crosswalk covers yet.
+file, a deliberately thin file whose gaps are reported as unknown, and
+two techniques no crosswalk covers yet.
 
 ```bash
 python exampleMetadata-NEXUS/generate.py --profile-dir ../XAS-CDIF/release
