@@ -37,7 +37,7 @@ Validate against the CDIF XAS profile, which lives in another
 repository:
 
 ```bash
-git clone https://github.com/CDIF-4-XAS/XAS-CDIF -b cdifxasRelease1.1 ../XAS-CDIF
+git clone https://github.com/CDIF-4-XAS/XAS-CDIF ../XAS-CDIF
 uv run cdifnexmetadata exampleData/cu_metal_rt.nxs --validate \
     --profile-dir ../XAS-CDIF/release
 ```

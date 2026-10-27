@@ -1,7 +1,7 @@
 # exampleMetadata-xdi
 
 The 55 XDI files in
-[`XAS-CDIF/exampleData`](https://github.com/smrgeoinfo/XAS-CDIF/tree/cdifxasRelease1.1/exampleData),
+[`XAS-CDIF/exampleData`](https://github.com/CDIF-4-XAS/XAS-CDIF/tree/main/exampleData),
 converted by **this** pipeline.
 
 The same files converted by the production RML pipeline are in
