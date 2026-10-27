@@ -112,7 +112,7 @@ def main() -> int:
         # mean nothing, because the document never claimed to satisfy it.
         # "Not applicable" and "failed" are different answers.
         verdict = "n/a - no profile artifacts for the profiles claimed"
-        if not profile.is_empty and "xasCore/1.0" in result.profiles:
+        if not profile.is_empty and "xasCore/1.1" in result.profiles:
             verdict = validate_document(result.document, profile).summary()
 
         rows.append((

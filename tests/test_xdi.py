@@ -349,7 +349,7 @@ def test_an_xdi_file_is_xas_without_declaring_a_nexus_definition(tmp_path):
     """The format is the X-ray Absorption Data Interchange format and
     describes nothing else, so declaring it declares the technique."""
     result = _emit(tmp_path)
-    assert "xasCore/1.0" in result.profiles
+    assert "xasCore/1.1" in result.profiles
     techniques = {
         t["schema:name"]
         for t in result.document["schema:measurementTechnique"]
@@ -440,7 +440,7 @@ def test_both_separator_styles_produce_the_same_document(tmp_path, text):
     result = _emit(tmp_path, text)
     assert result.profiles == [
         "core/1.1", "discovery/1.1", "data_description/1.1",
-        "data_structure/1.1", "xasCore/1.0",
+        "data_structure/1.1", "xasCore/1.1",
     ]
 
 

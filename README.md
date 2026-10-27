@@ -196,7 +196,7 @@ report of what was found rather than a statement of intent:
 | `discovery/1.1` | a technique, keywords, a time coverage, or a facility |
 | `data_description/1.1` | at least one variable |
 | `data_structure/1.1` | at least one data structure *with components* |
-| `xasCore/1.0` | an XAS file **and** at least one entry carrying values |
+| `xasCore/1.1` | an XAS file **and** at least one entry carrying values |
 
 A file is XAS if it is XDI, or if a NeXus definition starts with
 `NXxas`. That last row is the one worth understanding: declaring

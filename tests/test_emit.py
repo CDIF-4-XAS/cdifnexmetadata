@@ -314,7 +314,7 @@ def test_profiles_are_claimed_only_where_the_content_exists(tmp_path):
     # satisfying it.
     assert result.profiles == ["core/1.1", "discovery/1.1"]
     assert "data_description/1.1" not in result.profiles
-    assert "xasCore/1.0" not in result.profiles
+    assert "xasCore/1.1" not in result.profiles
 
     full = tmp_path / "full.nxs"
     with h5py.File(full, "w") as f:
@@ -724,7 +724,7 @@ def test_a_non_xas_file_does_not_claim_the_xas_profile(tmp_path):
              "DETECTOR:NXdetector/data"),
     )
     result = _emit(p, cw)
-    assert "xasCore/1.0" not in result.profiles
+    assert "xasCore/1.1" not in result.profiles
     assert "data_description/1.1" in result.profiles   # it did measure
     names = {t.get("schema:termCode") for t
              in result.document.get("schema:measurementTechnique", [])}

@@ -80,7 +80,7 @@ Carried forward deliberately from the prior codebases surveyed in docs/DESIGN-20
   (`profiles = [...]`), and the README carries the same table for users:
   `core/1.1` always; `discovery/1.1` for a technique, keywords, a time
   coverage or a facility; `data_description/1.1` for any variable;
-  `data_structure/1.1` for a structure that has components; `xasCore/1.0`
+  `data_structure/1.1` for a structure that has components; `xasCore/1.1`
   for an XAS file whose entries actually carry values. Declaring `NXxas`
   is necessary but not sufficient -- a claim about content needs the
   content. Emit a `dcterms:conformsTo` entry

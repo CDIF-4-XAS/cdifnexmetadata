@@ -1432,7 +1432,7 @@ def emit_document(
         # claim about content, so an entry that declares the definition
         # and carries none of it must not make the claim -- the whole
         # point of detecting conformance rather than asserting it.
-        profiles.append("xasCore/1.0")
+        profiles.append("xasCore/1.1")
     result.profiles = profiles
 
     doc["schema:subjectOf"] = {

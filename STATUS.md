@@ -167,7 +167,7 @@ that assumes one entry per file is wrong.
 `UPLIFT-INSTRUCTIONS.md` in `smrgeoinfo/cdif-xas` reads as a plan
 addressed to a future session. It has been **executed** — tasks 1–16
 applied, 37/37 of the test corpus fully valid against
-`xasDocument/1.0` (JSON Schema + SHACL). Do not treat it as pending
+`xasDocument/1.1` (JSON Schema + SHACL). Do not treat it as pending
 work or assume a parallel session is mid-flight on it.
 
 ### 8. Corrections a from-first-principles reading tends to get wrong
