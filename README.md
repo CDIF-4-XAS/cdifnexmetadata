@@ -112,19 +112,19 @@ from several places, each saying which.
 |---|--:|---|
 | `inspect/hdf5.py` | 469 | generic h5py walker; small values are metadata, large arrays are data |
 | `inspect/nexus.py` | 618 | `NX_class` overlay; four-tier resolution of which array is the signal |
-| `inspect/xdi.py` | 243 | XDI reader; sniffs `# XDI/…` on line 1 |
+| `inspect/xdi.py` | 304 | XDI reader; sniffs `# XDI/…` on line 1 |
 | `nxdl/repository.py` | 241 | fetches NXDL definitions, pinned to a commit SHA, cached |
 | `nxdl/definition.py` | 366 | parses NXDL, resolves `extends` inheritance |
-| `map/crosswalk.py` | 462 | SSSOM loading, NXDL path matching, crosswalk selection |
-| `map/concepts.py` | 508 | the concept-keyed record; NeXus binding |
-| `map/xdi.py` | 338 | XDI binding — dictionary lookup, not tree walking |
+| `map/crosswalk.py` | 525 | SSSOM loading, NXDL path matching, crosswalk selection |
+| `map/concepts.py` | 551 | the concept-keyed record; NeXus binding |
+| `map/xdi.py` | 389 | XDI binding — dictionary lookup, not tree walking |
 | `map/normalise.py` | 147 | free-text header values a producer wrote outside the dictionary |
 | `map/legacy.py` | 114 | where non-standard writers actually put things |
-| `emit.py` | 1173 | concept records to CDIF JSON-LD |
+| `emit.py` | 1460 | concept records to CDIF JSON-LD |
 | `validate.py` | 462 | framing, JSON Schema, SHACL |
-| `cli.py` | 234 | dispatch, batch, reporting, exit codes |
+| `cli.py` | 278 | dispatch, batch, reporting, exit codes |
 
-204 tests, 2 skipped. They run offline — fixtures are synthesised and
+225 tests, 2 skipped. They run offline — fixtures are synthesised and
 crosswalks written inline, so a failure means this code changed rather
 than that upstream revised a mapping row.
 
@@ -142,10 +142,12 @@ file yields 22 concepts and 4 variables.
 |---|---|
 | `cdifxas-to-nexus.sssom.tsv` | CDIF XAS concept → NeXus path *(copied from upstream)* |
 | `xdi-to-cdifxas.sssom.tsv` | XDI key → CDIF XAS concept *(copied from upstream)* |
+| `xdi-to-schemaorg.sssom.tsv` | XDI bibliographic/rights header → schema.org property *(copied from upstream)* |
+| `cdifxas-units.tsv` | CDIF XAS concept → the QUDT unit the glossary states for it *(copied from upstream)* |
 | `cdifsas-to-nexus.sssom.tsv` | CDIF SAS concept → NeXus path |
 | `legacy-paths.tsv` | writer conventions that diverge from the standard |
 
-The first two are copies. Their master versions live in
+The first four are copies. Their master versions live in
 [XAS-CDIF](https://github.com/CDIF-4-XAS/XAS-CDIF) and are built there
 by `crosswalk/build_crosswalk.py`; the copies exist so this package
 works offline and so a release is pinned to a known crosswalk revision.
@@ -196,6 +198,7 @@ report of what was found rather than a statement of intent:
 | `discovery/1.1` | a technique, keywords, a time coverage, or a facility |
 | `data_description/1.1` | at least one variable |
 | `data_structure/1.1` | at least one data structure *with components* |
+| `manifest/1.1` | a distribution with parts (a multi-entry file); `xasDocument` requires the claim then |
 | `xasCore/1.1` | an XAS file **and** at least one entry carrying values |
 
 A file is XAS if it is XDI, or if a NeXus definition starts with
@@ -361,10 +364,11 @@ pip install "cdifnexmetadata[validate]"
 ```
 
 To pin a workflow to an exact revision rather than a release, install
-from a commit -- a SHA cannot move, where a tag can:
+from a commit -- a SHA cannot move, where a tag can. The commit tagged
+`v0.1.1`:
 
 ```bash
-pip install "git+https://github.com/CDIF-4-XAS/cdifnexmetadata@v0.1.0"
+pip install "git+https://github.com/CDIF-4-XAS/cdifnexmetadata@35a6c1ed5c82c2e5a823e26d39538080d5115b98"
 ```
 
 For development, clone and `uv sync --all-extras` as in the Quickstart.
@@ -506,8 +510,8 @@ only be answered by reading real data:
 writes `docs/observed-nexus-paths.tsv` — every concept found in
 `exampleData/`, the entry-relative path it was found at, whether that
 path came from the crosswalk or a legacy convention, and the NXDL path
-stated for it. Currently 40 concepts over 47 concept/path pairs, of
-which **7 concepts appear at more than one path** — `beamline` is at
+stated for it. Currently 41 concepts over 50 concept/path pairs, of
+which **9 concepts appear at more than one path** — `beamline` is at
 `/instrument/name` in standards-conforming files and at
 `/instrument/source/beamline_name` in Athena/GSECARS ones.
 

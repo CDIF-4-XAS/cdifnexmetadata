@@ -1,6 +1,6 @@
 # STATUS — consolidated state of play
 
-**Last updated:** 2026-07-27
+**Last updated:** 2026-10-29
 
 This file exists so that *any* surface — another Claude Code session, a
 claude.ai chat, a human — can pick up cold without re-deriving what has
@@ -63,8 +63,8 @@ lookup table *is* the SSSOM alignment.
 |---|---|---|---|
 | **Goal** | NeXus HDF5 → CDIF | Align CDIF XAS vocabulary with NeXus | XDI → CDIF (Dataverse workflow) |
 | **Repo** | `CDIF-4-XAS/cdifnexmetadata` (`main`) | `CDIF-4-XAS/XAS-CDIF` (`main`) | `smrgeoinfo/cdif-xas` (`main`) |
-| **State** | **Working** — published as `cdifnexmetadata` 0.1.0; reads NeXus and XDI | Analysis + enumeration import done | **Working — 37/37 valid** |
-| **Head** | `0c02ebe` | `2fe64e1` | `b915c51` |
+| **State** | **Working** — published as `cdifnexmetadata` 0.1.1; reads NeXus and XDI | **Released** — 1.1, tagged `1.1` on 2026-10-27 | **Working — 55/55 valid** |
+| **Head** | `59f2217` | `41f5cc8` | `d03c996` |
 | **Layer** | 4 (NeXus binding) | 1–2 (concepts + alignment) | 3–4 (serialization + XDI binding) |
 
 **A and C are the two bindings of the same architecture.** A is the
@@ -166,7 +166,7 @@ that assumes one entry per file is wrong.
 
 `UPLIFT-INSTRUCTIONS.md` in `smrgeoinfo/cdif-xas` reads as a plan
 addressed to a future session. It has been **executed** — tasks 1–16
-applied, 37/37 of the test corpus fully valid against
+applied, 55/55 of the test corpus fully valid against
 `xasDocument/1.1` (JSON Schema + SHACL). Do not treat it as pending
 work or assume a parallel session is mid-flight on it.
 
@@ -191,10 +191,10 @@ these, as did an earlier pass in this one:
   Use manual URLs now ([§3](#3-nxs-prefix-concatenation-does-not-resolve))
   and treat any future ontology IRI as a later `skos:exactMatch` row,
   which is exactly what SSSOM is for.
-- **The XAS glossary changed on 2026-07-27** (`XAS_Glossary_SKOS_v2.json`,
-  named `XAS_Glossary_SKOS.json` at the time) — 89 → 90
-  concepts (added `emissionline`; it has since grown to **106**, and the
-  released filename is now `XAS_Glossary_SKOS_v2.json`), and `edgeanalyzed` /
+- **The XAS glossary changed on 2026-07-27** (`XAS_Glossary_SKOS.json`,
+  the working file; it is published and released as
+  `XAS_Glossary_SKOS_v2.json`) — 89 → 90
+  concepts (added `emissionline`; it has since grown to **106**), and `edgeanalyzed` /
   `xasmeasurementmode` gained `dc:references` to three new value-list
   schemes. Anchor SSSOM on the current file, and use the imported
   enumerations (39 edges, 432 emission lines, 7 detection modes) as
@@ -216,8 +216,9 @@ these, as did an earlier pass in this one:
 
 ### Sentinel conventions (shared across all three repos)
 
-- `"Missing"` — required text/name field the source did not supply
-- `"unknown"` — required numeric/enumerated field needing domain input
+- `":unav"` (DataCite's "value unavailable") — required text, numeric or
+  enumerated field the source did not supply; it replaced the earlier
+  `"Missing"` / `"unknown"` in both converters
 - `<http://www.opengis.net/def/nil/OGC/0/missing>` — required URI-shape value
 
 Prefer *omitting* an optional field over filling it with a sentinel.
@@ -529,36 +530,33 @@ and one undivided Fluorescence Yield; the fork drops Auger, splits
 fluorescence into total/partial, and adds HERFD. Either source alone
 loses terms.
 
+Recommendations 2 and 3, done for release 1.1:
+
+2. The concepts for PFY/HERFD/PEY vocabulary CDIF lacked are in the
+   glossary: `emissionenergy`, `emissionenergywindow`,
+   `retardingvoltage`, `analyzercrystal`, `rowlandradius`,
+   `bendingradius`, `deadtime`, `counttime`, `intensityuncertainty`
+3. The NeXus matches are rows in `crosswalk/cdifxas-to-nexus.sssom.tsv`
+   rather than SKOS mapping properties on the glossary, pointing at
+   **base-class** paths. `calculated` ↔ `is_experimental` is a
+   `skos:relatedMatch`, **not** `exactMatch` — the boolean polarity is
+   inverted
+
+The SSSOM alignment proposed here as the next artifact, anchored on the
+working glossary with XDI tokens and NeXus paths as its two bindings and
+the XDI side validated against the keys `mapping_dds.ttl` reads, became
+the five tables in `XAS-CDIF/crosswalk/`, built and checked by
+`crosswalk/build_crosswalk.py`. This package bundles copies.
+
 ### Not done — remaining recommendations
 
-2. Hand-write ~10 concepts for PFY/HERFD/PEY vocabulary CDIF lacks:
-   `emissionenergy`, `emissionenergywindow`, `retardingvoltage`,
-   `analyzercrystal`, `rowlandradius`, `bendingradius`, `deadtime`,
-   `counttime`, `intensityuncertainty`
-3. Add `skos:exactMatch` / `closeMatch` to the ~22 overlapping concepts,
-   pointing at **base-class** paths. Flag `calculated` ↔
-   `is_experimental` as `skos:related`, **not** `exactMatch` — the
-   boolean polarity is inverted
 4. Move the 8 genuinely unhomed XDI-derived concepts to an `xdi:`
    namespace: `installedoptions`, `scanmode`, `calibrationmethod`,
    `fluxmeasuremethod`, `website`, `monochromatorangle`, `monitormode`,
    `monitorpreset`
 5. Adopt the NXxas subclass hierarchy as `skos:broader` — the glossary is
-   currently entirely flat (all concepts `hasTopConcept`, no
-   `broader`/`narrower`)
-
-### Next artifact (proposed, not started)
-
-An SSSOM alignment set for the **transmission slice** end-to-end —
-element, edge, energy, i0/itrans, facility, mono/d-spacing — anchored on
-the current `XAS_Glossary_SKOS.json`, with XDI tokens as one
-binding and `NXxas_trans` concept paths as the other. Validate the XDI
-side against the concept keys `mapping_dds.ttl` actually references, and
-diff the emitted output against the existing reference JSON-LD.
-
-Anchor on the **local** glossary file, not the published
-`w3id.org/cdif/xas/` concepts — the local copy is ahead of what is
-published (see Established §8).
+   still nearly flat (104 of its 106 concepts are `hasTopConcept`; two
+   are nested)
 
 ### Worth proposing upstream
 

@@ -6,29 +6,40 @@ Orientation for future Claude Code (or human) sessions.
 
 A Python tool that reads a NeXus-formatted HDF5 file **or an XDI text
 file** and emits CDIF 1.1
-schema.org JSON-LD describing it — core, discovery, dataDescription, and
-dataStructure profiles, to the extent the file's own internal description
-supports each.
+schema.org JSON-LD describing it — core, discovery, dataDescription,
+dataStructure, manifest and xasCore profiles, to the extent the file's own
+internal description supports each.
 
-**Read [`docs/DESIGN-2026-07-27.md`](./docs/DESIGN-2026-07-27.md) first.** It has the pipeline architecture,
-the NeXus→CDIF mapping tables, the decisions already made (and why), the open
-questions, and a survey of reusable prior art in two other repositories.
+**Read [`README.md`](./README.md) first.** It describes the system as built:
+the pipeline and concept hub, the modules, the decisions and why, and what
+is still open. [`STATUS.md`](./STATUS.md) has the cross-repository state
+and the facts established empirically.
+[`docs/DESIGN-2026-07-27.md`](./docs/DESIGN-2026-07-27.md) is the design
+written before any code, kept for comparison; its first section lists
+what the build changed, and its NeXus ecosystem and prior-art surveys are
+still the fullest record of those.
 
 ## Current state
 
-All four stages implemented and tested: 189 tests, 2 skipped.
+All four stages implemented and tested: 225 tests, 2 skipped.
 
 - **Two input formats.** NeXus/HDF5 and XDI, dispatched on what the file
   declares.
-- **Three crosswalks bundled** in `src/cdifnexmetadata/data/`:
-  `cdifxas-to-nexus` and `xdi-to-cdifxas` (copies, mastered in XAS-CDIF),
+- **Crosswalks bundled** in `src/cdifnexmetadata/data/`:
+  `cdifxas-to-nexus`, `xdi-to-cdifxas`, `xdi-to-schemaorg` and
+  `cdifxas-units` (copies, mastered in XAS-CDIF; refresh with
+  `python -m cdifnexmetadata.map.crosswalk --refresh`, never edit),
   `cdifsas-to-nexus` (authored here). Plus `legacy-paths.tsv` for
   writers that diverge from the standard.
-- **Worked examples** in `exampleData/` and `exampleMetadata/`, spanning
-  XAS, SAS, an XDI file, and two techniques no crosswalk covers.
-- **Validation** against JSON Schema + SHACL via `--profile-dir`.
-  FeXAS.nxs and all 55 XDI files in the XAS-CDIF corpus validate clean
-  against the strict `xasDocument` composite.
+- **Worked examples** in `exampleData/`, converted into
+  `exampleMetadata-NEXUS/` (XAS, SAS, an XDI file, and two techniques no
+  crosswalk covers) and `exampleMetadata-xdi/` (the 55 XDI files of the
+  XAS-CDIF corpus).
+- **Validation** against JSON Schema + SHACL via `--profile-dir`, pointed
+  at `XAS-CDIF/release/` (the `xasDocument/1.1` profile of XAS-CDIF
+  release 1.1). The 7 XAS NeXus examples and all 55 XDI files validate
+  clean against the strict `xasDocument` composite. Emitted documents
+  claim `xasCore/1.1`.
 
 Not started: importing schema.org metadata, or a form for the CDIF core
 properties neither format carries (creator, licence, identifiers).
@@ -65,9 +76,12 @@ Carried forward deliberately from the prior codebases surveyed in docs/DESIGN-20
   covers. No code change, no registration step. NXsas was added this
   way.
 - **Emission is the only place that knows CDIF.** `CONCEPT_SLOTS` in
-  `emit.py` is deliberately Python, not a fourth TSV: "where does this
+  `emit.py` is deliberately Python, not another TSV: "where does this
   concept go in a schema.org graph" involves nesting and
-  cross-references a flat table cannot express.
+  cross-references a flat table cannot express. XAS-CDIF publishes a
+  flattened view of it, `crosswalk/cdifxas-placement.tsv`, built from this
+  file by its `crosswalk/build_placement.py`; rerun that there after
+  changing `CONCEPT_SLOTS`.
 - **`cdi:isStructuredBy` goes on the distribution.** The JSON Schema
   admits it only on a distribution item and the SHACL rule reaches it
   there. Each part references its structure by `@id`. Dataset level
@@ -80,7 +94,8 @@ Carried forward deliberately from the prior codebases surveyed in docs/DESIGN-20
   (`profiles = [...]`), and the README carries the same table for users:
   `core/1.1` always; `discovery/1.1` for a technique, keywords, a time
   coverage or a facility; `data_description/1.1` for any variable;
-  `data_structure/1.1` for a structure that has components; `xasCore/1.1`
+  `data_structure/1.1` for a structure that has components;
+  `manifest/1.1` for a distribution with parts; `xasCore/1.1`
   for an XAS file whose entries actually carry values. Declaring `NXxas`
   is necessary but not sufficient -- a claim about content needs the
   content. Emit a `dcterms:conformsTo` entry
@@ -137,9 +152,8 @@ that no check rejects because it *is* a syntactically valid IRI. Where a
 profile requires a URI, use `OGC_NIL_MISSING`, a real dereferenceable IRI
 meaning the same thing.
 
-The CDIF-XAS RML pipeline (`smrgeoinfo/cdif-xas`) still writes the older
-`"Missing"` / `"unknown"` text sentinels. Documents from the two tools no
-longer match on these values until it is updated.
+The CDIF-XAS RML pipeline (`smrgeoinfo/cdif-xas`) writes `":unav"` too, so
+documents from the two tools match on these values.
 
 Prefer *omitting* an optional field over filling it with a sentinel. Sentinels
 are for fields the profile requires.

@@ -43,35 +43,30 @@ corpus: the Diamond B18 series (`262875_PtSn_*` and siblings) gives
 `feo_rt1.xdi` write a source type under neither `Facility` nor
 `Beamline`.
 
-Both are now emitted as `unknown`, with a description on each saying it
-was not recorded in the source file. An omitted property makes the
-instrument undescribable and fails validation; a guessed one is
-indistinguishable from a reading.
+An omitted property makes the instrument undescribable and fails
+validation, so both are emitted, each with a description saying it was
+not recorded in the source file:
 
-The sentinel is deliberately not the plausible default. `exampleMetadata/`
-writes `Synchrotron X-ray Source` for a missing source type -- true of
-every file here, and still an assertion none of them made. It also
-writes `reflectionplane: 1,1,1` for `Si(311)`, which is not true of
-any of them.
+- a missing d-spacing is `:unav`, DataCite's "value unavailable";
+- a missing source type is `Synchrotron X-ray Source`, because the
+  technique supplies it: an XAS measurement is made at a synchrotron.
+  The description says so, so a consumer can tell it from a value the
+  beamline recorded.
 
 ## Reading the difference
 
-Both directories now validate 55/55, so the pass rate says nothing. The
-difference is in what each says where a file is silent.
+Both directories validate 55/55, so the pass rate says nothing. The
+difference is in what each says where a file is silent, and on these
+properties the two now agree on the values:
 
-Where `Mono.d_spacing` is absent, The RML output and this directory
-agree: both write `unknown`. Where `Facility.xray_source` is absent they
-do not -- the RML output writes `Synchrotron X-ray Source`, this one
-writes `unknown`. The first is true of every file in this corpus and is
-still an assertion none of them made; a consumer reading it cannot tell
-it from a value the beamline recorded.
+| where the file omits | `exampleMetadata/` (RML) | this directory |
+|---|---|---|
+| `Mono.d_spacing` | `:unav` | `:unav`, with a description |
+| a source type | `Synchrotron X-ray Source` | `Synchrotron X-ray Source`, with a description saying the technique supplied it |
+| a reflection plane (read from `Mono.name`, e.g. `Si(311)`) | `3,1,1` | `3 1 1` |
 
-The same distinction shows in `reflectionplane`. The RML output once
-wrote `1,1,1` for every file, including the eight whose `Mono.name`
-says `Si(311)`. This directory reads the reflection out of `Mono.name`
-and writes `3 1 1` for those.
-
-Neither approach is wrong in general -- a catalogue that must not show
-blanks wants defaults, and an assessment of source-data quality wants
-gaps left visible. But a default that cannot be distinguished from a
-reading forecloses the second use, and a wrong default forecloses both.
+The RML output once wrote `1,1,1` for every file, including the eight
+whose `Mono.name` says `Si(311)`; both now read the reflection out of
+`Mono.name`. What still differs is the description: this directory marks
+a value it supplied, and the RML output does not, so there a default
+cannot be told from a reading.
