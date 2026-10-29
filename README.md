@@ -351,6 +351,11 @@ being folded into a raw-data one.
 
 ## Installation
 
+Published on PyPI as
+[`cdifnexmetadata`](https://pypi.org/project/cdifnexmetadata/); the
+current version, 1.1.0, is the one aligned with XAS-CDIF release 1.1
+(below).
+
 ```bash
 pip install cdifnexmetadata
 ```
