@@ -365,17 +365,18 @@ pip install "cdifnexmetadata[validate]"
 
 **The tag `1.1` is aligned with
 [XAS-CDIF release 1.1](https://github.com/CDIF-4-XAS/XAS-CDIF/releases/tag/1.1).**
-At that commit this package emits `xasCore/1.1`, bundles the 1.1
-crosswalks, and its output validates against the `xasDocument/1.1`
-profile in that release's `release/` folder. The tag follows the
-XAS-CDIF release number; the `v0.x` tags follow the package version.
-`v0.1.1` predates the 1.1 alignment and does not emit `xasCore/1.1`.
+It is package version 1.1.0 on PyPI: this package emits `xasCore/1.1`,
+bundles the 1.1 crosswalks, and its output validates against the
+`xasDocument/1.1` profile in that release's `release/` folder. The
+earlier `v0.1.0` and `v0.1.1` predate the alignment and emit
+`xasCore/1.0`.
 
-To pin a workflow to an exact revision rather than a tag, install from a
-commit -- a SHA cannot move, where a tag can. The commit tagged `1.1`:
+To pin a workflow to an exact revision rather than a release, install
+from a commit -- a SHA cannot move, where a tag can. `git rev-list -n1
+1.1` gives the commit tagged `1.1`:
 
 ```bash
-pip install "git+https://github.com/CDIF-4-XAS/cdifnexmetadata@56e198e035cbcd84d2aa8d4be46f3b24c9f799cd"
+pip install "git+https://github.com/CDIF-4-XAS/cdifnexmetadata@<commit>"
 ```
 
 For development, clone and `uv sync --all-extras` as in the Quickstart.
