@@ -918,25 +918,32 @@ def _instruments(
     """Source and monochromator as peer instruments of the acquisition,
     each carrying its own settings. Mirrors the shape the XDI converter
     settled on, so the two bindings produce comparable graphs."""
-    def used(name: str, kind: str, props: list) -> dict[str, Any]:
+    def peer(name: str, kind: str, props: list) -> dict[str, Any]:
         slug = kind.split(":", 1)[-1]
         props = _with_sentinels(kind, props, is_xas)
-        # The entity wraps the instrument rather than being it. That
-        # nesting is what the profile frame declares, and a frame drops
-        # what it does not declare -- so a flat prov:used passes
-        # validation of the raw document and then vanishes when framed.
+        # The instrument goes straight into the activity's
+        # schema:instrument, not inside a prov:used entity: the CDIF
+        # provenance model records instruments, software and reagents
+        # with schema:instrument and inputs with schema:object, and
+        # accepts on prov:used only strings and @id references. An
+        # instrument nested in a prov:used wrapper fails cdifProvActivity,
+        # which needs one of schema:instrument, schema:object or
+        # schema:actionProcess on the activity itself.
         instrument: dict[str, Any] = {
             "@id": f"{base}/instrument/{slug}",
             # prov:Entity as well as the schema.org types: the instrument
-            # is the entity the activity used, and the profile requires
-            # the PROV class on it, not only on the wrapper around it.
+            # is an entity the activity used. The profile no longer asks
+            # for it -- it did while the instrument sat in prov:used.
             "@type": ["schema:Product", "schema:Thing", "prov:Entity"],
             "schema:name": name,
             # Two classes, and the profile requires both: the xas: term
             # says which instrument this is, wd:Q3099911 says that it is a
             # scientific instrument at all. xasInstrument requires the
             # Wikidata class, so emitting only the specific one failed
-            # validation on every document this tool produced.
+            # validation on every document this tool produced. It is also
+            # the one kind term that tells cdifProvActivity this
+            # schema:instrument item is an instrument, not software or a
+            # reagent.
             "schema:additionalType": [
                 {"@id": kind},
                 {"@id": "wd:Q3099911"},
@@ -944,14 +951,7 @@ def _instruments(
         }
         if props:
             instrument["schema:additionalProperty"] = props
-        return {
-            "@id": f"{base}/used/{slug}",
-            "@type": ["schema:Thing", "prov:Entity"],
-            # An ARRAY, because one activity commonly uses several
-            # instruments in the same role and the profile pins the
-            # wrapper's value to a list. A bare object validated nowhere.
-            "schema:instrument": [instrument],
-        }
+        return instrument
 
     # Three peers, because the profile distinguishes them: the beamline
     # is where the measurement happened, the source is what made the
@@ -960,12 +960,12 @@ def _instruments(
     # satisfies neither constraint.
     out: list[dict[str, Any]] = []
     if buckets["instrument"]:
-        out.append(used(buckets["instrument"], BEAMLINE_TYPE, []))
+        out.append(peer(buckets["instrument"], BEAMLINE_TYPE, []))
     elif is_xas:
         # The profile requires a named beamline as well, so an XAS file
         # that names none gets the same treatment as a silent source.
-        beamline = used(UNKNOWN, BEAMLINE_TYPE, [])
-        beamline["schema:instrument"][0]["schema:description"] = (
+        beamline = peer(UNKNOWN, BEAMLINE_TYPE, [])
+        beamline["schema:description"] = (
             "beamline not named in the source file; the profile requires "
             "one, so its name is reported as unknown rather than guessed"
         )
@@ -976,9 +976,9 @@ def _instruments(
     # omitting them states nothing at all and fails validation. For any
     # other technique only what the file actually carries is described.
     if buckets["source"] or is_xas:
-        out.append(used("X-ray source", SOURCE_TYPE, buckets["source"]))
+        out.append(peer("X-ray source", SOURCE_TYPE, buckets["source"]))
     if buckets["monochromator"] or is_xas:
-        out.append(used("monochromator", MONOCHROMATOR_TYPE,
+        out.append(peer("monochromator", MONOCHROMATOR_TYPE,
                         buckets["monochromator"]))
     return out
 
@@ -1337,7 +1337,9 @@ def emit_document(
         }
     instruments = _instruments(buckets, base, is_xas)
     if instruments:
-        event["prov:used"] = instruments
+        # An ARRAY, because one activity commonly uses several
+        # instruments and the profile pins schema:instrument to a list.
+        event["schema:instrument"] = instruments
     if buckets["sample"]:
         # Typed as a material sample, which the profile requires in two
         # places at once: schema:Product and schema:Thing on @type, and
@@ -1384,17 +1386,18 @@ def emit_document(
     # measured over three days answers a different question from "when
     # was this spectrum taken".
     #
-    # `prov:used` here is @id references to the instrument wrappers the
-    # file-level event describes in full. The same beamline measured
-    # every entry, so repeating its description 26 times would assert 26
-    # beamlines; a reference denotes the one node. It also satisfies the
-    # cdifProvActivity shape, which requires at least one prov:used on
-    # any activity reached through prov:wasGeneratedBy -- and a part's
+    # `schema:instrument` here is sealed @id references to the
+    # instruments the file-level event describes in full. The same
+    # beamline measured every entry, so repeating its description 26
+    # times would assert 26 beamlines; a reference denotes the one node.
+    # It also satisfies the cdifProvActivity shape, which requires one of
+    # schema:instrument, schema:object or schema:actionProcess on any
+    # activity reached through prov:wasGeneratedBy -- and a part's
     # activity is reached exactly that way.
-    used_refs = [{"@id": u["@id"]} for u in instruments if "@id" in u]
+    instrument_refs = [{"@id": i["@id"]} for i in instruments if "@id" in i]
     for part, entry in part_entries:
         coverage = _coverage(entry)
-        if not coverage or not used_refs:
+        if not coverage or not instrument_refs:
             continue
         start, _, end = coverage.partition("/")
         acquisition: dict[str, Any] = {
@@ -1403,7 +1406,7 @@ def emit_document(
             "schema:additionalType": [{"@id": ANALYSIS_EVENT}],
             "schema:name": f"acquisition of {entry.name}",
             "schema:startTime": start,
-            "prov:used": used_refs,
+            "schema:instrument": instrument_refs,
         }
         if end and end != start:
             acquisition["schema:endTime"] = end

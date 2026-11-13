@@ -516,9 +516,9 @@ def test_a_required_property_the_file_omits_becomes_a_sentinel(tmp_path):
     text = SPACED.replace("# Mono.name: Si(111)", "# Mono.name: Si(111)")
     doc = _emit(tmp_path, text).document
     mono = next(
-        u["schema:instrument"][0]
-        for u in doc["prov:wasGeneratedBy"][0]["prov:used"]
-        if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
+        i
+        for i in doc["prov:wasGeneratedBy"][0]["schema:instrument"]
+        if i["schema:additionalType"][0]["@id"]
         == "xas:xraymonochromator")
     by_id = {p["schema:propertyID"][0]["@id"]: p
              for p in mono["schema:additionalProperty"]}
@@ -536,9 +536,9 @@ def test_a_sentinel_never_displaces_a_recorded_value(tmp_path):
         "# Mono.name: Si(111)\n# Mono.d_spacing: 3.1355")
     doc = _emit(tmp_path, text).document
     mono = next(
-        u["schema:instrument"][0]
-        for u in doc["prov:wasGeneratedBy"][0]["prov:used"]
-        if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
+        i
+        for i in doc["prov:wasGeneratedBy"][0]["schema:instrument"]
+        if i["schema:additionalType"][0]["@id"]
         == "xas:xraymonochromator")
     by_id = {p["schema:propertyID"][0]["@id"]: p
              for p in mono["schema:additionalProperty"]}
