@@ -312,12 +312,15 @@ which answers "when did this batch run" — a different question from
 its file-level span is 2020-08-10T09:18:48 to 2020-08-12T22:12:09 and
 each of the 26 parts states its own few minutes within that.
 
-The per-part activity names its instruments by `@id` rather than
-repeating them. The same beamline measured every entry, so 26 inline
-copies would assert 26 beamlines; a reference denotes the one node the
-file-level activity describes in full. It also satisfies the
-`cdifProvActivity` shape, which requires `prov:used` on *any* activity
-reached through `prov:wasGeneratedBy` — which a part's is.
+The per-part activity names its instruments in `schema:instrument` by
+`@id` rather than repeating them. The same beamline measured every entry,
+so 26 inline copies would assert 26 beamlines; a reference denotes the
+one node the file-level activity describes in full. It also satisfies the
+`cdifProvActivity` shape, which requires one of `schema:instrument`,
+`schema:object` or `schema:actionProcess` on *any* activity reached
+through `prov:wasGeneratedBy` — which a part's is. Neither activity
+writes `prov:used`: the CDIF provenance model records instruments with
+`schema:instrument` and inputs with `schema:object`.
 
 Times are normalised to ISO 8601 on the way out. NeXus files write
 `2020-08-10 09:18:48`, with a space, and nothing rejects it: the schema

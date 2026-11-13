@@ -232,7 +232,8 @@ def test_a_part_activity_references_the_instruments_it_does_not_repeat(tmp_path)
     per part would assert one beamline per scan; a reference denotes the
     one node the file-level event describes in full.
 
-    It also satisfies cdifProvActivity, which requires prov:used on any
+    It also satisfies cdifProvActivity, which requires one of
+    schema:instrument, schema:object or schema:actionProcess on any
     activity reached through prov:wasGeneratedBy -- which a part's is."""
     pth = tmp_path / "f.nxs"
     with h5py.File(pth, "w") as f:
@@ -241,13 +242,15 @@ def test_a_part_activity_references_the_instruments_it_does_not_repeat(tmp_path)
 
     doc = _emit(pth, _xas_crosswalk(tmp_path)).document
     parts = doc["schema:distribution"][0]["schema:hasPart"]
-    used = parts[0]["prov:wasGeneratedBy"][0]["prov:used"]
-    assert used, "a part activity must carry at least one prov:used"
+    refs = parts[0]["prov:wasGeneratedBy"][0]["schema:instrument"]
+    assert refs, "a part activity must carry at least one schema:instrument"
+    assert "prov:used" not in parts[0]["prov:wasGeneratedBy"][0]
     # References only: an @id and nothing else.
-    assert all(set(u) == {"@id"} for u in used)
+    assert all(set(r) == {"@id"} for r in refs)
     # And they denote the nodes the file-level event describes.
-    described = {u["@id"] for u in doc["prov:wasGeneratedBy"][0]["prov:used"]}
-    assert {u["@id"] for u in used} <= described
+    described = {
+        i["@id"] for i in doc["prov:wasGeneratedBy"][0]["schema:instrument"]}
+    assert {r["@id"] for r in refs} <= described
 
 
 def test_a_nexus_timestamp_is_normalised_to_iso_8601(tmp_path):
@@ -508,24 +511,30 @@ def test_a_file_with_no_nexus_content_still_emits_core(tmp_path):
         "spdx:algorithm"] == "spdx:checksumAlgorithm_sha256"
 
 
-def test_prov_used_nests_the_instrument_so_framing_keeps_it(tmp_path):
-    """A flat prov:used validates as raw JSON and then disappears when
-    framed, because a frame drops what it does not declare. The profile
-    frame declares schema:instrument beneath prov:used, so that is the
-    shape the entity has to take."""
+def test_instruments_go_in_schema_instrument_on_the_activity(tmp_path):
+    """The CDIF provenance model records instruments with
+    schema:instrument on the activity and accepts on prov:used only
+    strings and @id references. An instrument nested in a prov:used
+    entity fails cdifProvActivity, which needs schema:instrument,
+    schema:object or schema:actionProcess on the activity itself."""
     p = tmp_path / "f.nxs"
     with h5py.File(p, "w") as f:
         _scan(f, "scan1")
 
-    used = _emit(p, _xas_crosswalk(tmp_path)).document[
-        "prov:wasGeneratedBy"][0]["prov:used"]
-    assert used and all("schema:instrument" in u for u in used)
-    assert all(u["@type"] == ["schema:Thing", "prov:Entity"] for u in used)
-    inst = used[0]["schema:instrument"][0]
-    # prov:Entity too: the profile requires the PROV class on the
-    # instrument itself, not only on the wrapper around it.
+    event = _emit(p, _xas_crosswalk(tmp_path)).document[
+        "prov:wasGeneratedBy"][0]
+    assert "prov:used" not in event
+    instruments = event["schema:instrument"]
+    assert isinstance(instruments, list) and instruments
+    inst = instruments[0]
     assert inst["@type"] == ["schema:Product", "schema:Thing", "prov:Entity"]
     assert inst["schema:name"] == "13-ID-E"
+    # Exactly one Wikidata kind term, the instrument one, on every item:
+    # that is what tells the profile the item is an instrument.
+    for i in instruments:
+        kinds = [t["@id"] for t in i["schema:additionalType"]
+                 if t["@id"].startswith("wd:")]
+        assert kinds == ["wd:Q3099911"]
 
 
 def test_the_catalog_record_is_an_iri_not_a_blank_node(tmp_path):
@@ -601,14 +610,13 @@ def test_beamline_source_and_monochromator_are_separate_peers(tmp_path):
         _row("cdifxas:dspacing", "skos:exactMatch",
              "nxdl:NXcrystal/d_spacing"),
     )
-    used = _emit(p, cw).document["prov:wasGeneratedBy"][0]["prov:used"]
-    types = [u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
-             for u in used]
+    instruments = _emit(p, cw).document[
+        "prov:wasGeneratedBy"][0]["schema:instrument"]
+    types = [i["schema:additionalType"][0]["@id"] for i in instruments]
     assert types == ["xas:beamline", "xas:source", "xas:xraymonochromator"]
 
-    source = next(u["schema:instrument"][0] for u in used
-                  if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
-                  == "xas:source")
+    source = next(i for i in instruments
+                  if i["schema:additionalType"][0]["@id"] == "xas:source")
     ids = {pv["schema:propertyID"][0]["@id"]
            for pv in source["schema:additionalProperty"]}
     assert ids == {"xas:probe", "xas:xraysourcetype"}
@@ -625,9 +633,8 @@ def test_an_xas_file_naming_no_beamline_reports_it_unknown(tmp_path):
     with h5py.File(p, "w") as f:
         del _scan(f, "scan1")["instrument/name"]
 
-    used = _emit(p, _xas_crosswalk(tmp_path)).document[
-        "prov:wasGeneratedBy"][0]["prov:used"]
-    beamline = used[0]["schema:instrument"][0]
+    beamline = _emit(p, _xas_crosswalk(tmp_path)).document[
+        "prov:wasGeneratedBy"][0]["schema:instrument"][0]
     assert beamline["schema:additionalType"][0]["@id"] == "xas:beamline"
     assert beamline["schema:name"] == ":unav"
     assert beamline["schema:description"]
@@ -640,11 +647,10 @@ def test_a_sentinel_probe_is_named_as_a_read_one_would_be(tmp_path):
     with h5py.File(p, "w") as f:
         _scan(f, "scan1")
 
-    used = _emit(p, _xas_crosswalk(tmp_path)).document[
-        "prov:wasGeneratedBy"][0]["prov:used"]
-    source = next(u["schema:instrument"][0] for u in used
-                  if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
-                  == "xas:source")
+    instruments = _emit(p, _xas_crosswalk(tmp_path)).document[
+        "prov:wasGeneratedBy"][0]["schema:instrument"]
+    source = next(i for i in instruments
+                  if i["schema:additionalType"][0]["@id"] == "xas:source")
     probe = next(pv for pv in source["schema:additionalProperty"]
                  if pv["schema:propertyID"][0]["@id"] == "xas:probe")
     assert probe["schema:value"] == ":unav"
@@ -674,9 +680,9 @@ def test_property_values_are_strings_even_when_the_file_says_otherwise(
              "nxdl:NXcrystal/reflection"),
     )
     mono = next(
-        u["schema:instrument"][0]
-        for u in _emit(p, cw).document["prov:wasGeneratedBy"][0]["prov:used"]
-        if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
+        i
+        for i in _emit(p, cw).document["prov:wasGeneratedBy"][0]["schema:instrument"]
+        if i["schema:additionalType"][0]["@id"]
         == "xas:xraymonochromator")
     by_id = {pv["schema:propertyID"][0]["@id"]: pv
              for pv in mono["schema:additionalProperty"]}
@@ -746,9 +752,8 @@ def test_a_missing_source_type_depends_on_the_declared_technique(tmp_path):
             inst["name"] = "BL-1"
             _group(inst, "source", "NXsource")["name"] = "Facility X"
         doc = _emit(f, _xas_crosswalk(tmp_path)).document
-        peers = doc["prov:wasGeneratedBy"][0].get("prov:used", [])
-        for u in peers:
-            i = u["schema:instrument"][0]
+        peers = doc["prov:wasGeneratedBy"][0].get("schema:instrument", [])
+        for i in peers:
             if i["schema:additionalType"][0]["@id"] != "xas:source":
                 continue
             for pv in i.get("schema:additionalProperty", []):
@@ -779,9 +784,9 @@ def test_a_non_xas_source_type_that_is_required_uses_the_nil_uri(tmp_path):
                          "nxdl:NXsource/probe"))
     doc = _emit(f, cw).document
     source = next(
-        u["schema:instrument"][0]
-        for u in doc["prov:wasGeneratedBy"][0]["prov:used"]
-        if u["schema:instrument"][0]["schema:additionalType"][0]["@id"]
+        i
+        for i in doc["prov:wasGeneratedBy"][0]["schema:instrument"]
+        if i["schema:additionalType"][0]["@id"]
         == "xas:source")
     by_id = {p["schema:propertyID"][0]["@id"]: p["schema:value"]
              for p in source["schema:additionalProperty"]}
