@@ -36,10 +36,10 @@ All four stages implemented and tested: 225 tests, 2 skipped.
   crosswalk covers) and `exampleMetadata-xdi/` (the 55 XDI files of the
   XAS-CDIF corpus).
 - **Validation** against JSON Schema + SHACL via `--profile-dir`, pointed
-  at `XAS-CDIF/release/` (the `xasDocument/1.1` profile of XAS-CDIF
-  release 1.1). The 7 XAS NeXus examples and all 55 XDI files validate
+  at `XAS-CDIF/release/` (the `xasDocument/1.2` profile of XAS-CDIF
+  release 1.2). The 7 XAS NeXus examples and all 55 XDI files validate
   clean against the strict `xasDocument` composite. Emitted documents
-  claim `xasCore/1.1`.
+  claim `xasCore/1.2`.
 
 Not started: importing schema.org metadata, or a form for the CDIF core
 properties neither format carries (creator, licence, identifiers).
@@ -95,7 +95,7 @@ Carried forward deliberately from the prior codebases surveyed in docs/DESIGN-20
   `core/1.1` always; `discovery/1.1` for a technique, keywords, a time
   coverage or a facility; `data_description/1.1` for any variable;
   `data_structure/1.1` for a structure that has components;
-  `manifest/1.1` for a distribution with parts; `xasCore/1.1`
+  `manifest/1.1` for a distribution with parts; `xasCore/1.2`
   for an XAS file whose entries actually carry values. Declaring `NXxas`
   is necessary but not sufficient -- a claim about content needs the
   content. Emit a `dcterms:conformsTo` entry

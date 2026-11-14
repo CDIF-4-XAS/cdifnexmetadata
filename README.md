@@ -199,7 +199,7 @@ report of what was found rather than a statement of intent:
 | `data_description/1.1` | at least one variable |
 | `data_structure/1.1` | at least one data structure *with components* |
 | `manifest/1.1` | a distribution with parts (a multi-entry file); `xasDocument` requires the claim then |
-| `xasCore/1.1` | an XAS file **and** at least one entry carrying values |
+| `xasCore/1.2` | an XAS file **and** at least one entry carrying values |
 
 A file is XAS if it is XDI, or if a NeXus definition starts with
 `NXxas`. That last row is the one worth understanding: declaring
@@ -356,7 +356,7 @@ being folded into a raw-data one.
 
 Published on PyPI as
 [`cdifnexmetadata`](https://pypi.org/project/cdifnexmetadata/); the
-current version, 1.1.0, is the one aligned with XAS-CDIF release 1.1
+current version, 1.2.0, is the one aligned with XAS-CDIF release 1.2
 (below).
 
 ```bash
@@ -371,17 +371,22 @@ validate as well as produce:
 pip install "cdifnexmetadata[validate]"
 ```
 
-**The tag `1.1` is aligned with
-[XAS-CDIF release 1.1](https://github.com/CDIF-4-XAS/XAS-CDIF/releases/tag/1.1).**
-It is package version 1.1.0 on PyPI: this package emits `xasCore/1.1`,
-bundles the 1.1 crosswalks, and its output validates against the
-`xasDocument/1.1` profile in that release's `release/` folder. The
-earlier `v0.1.0` and `v0.1.1` predate the alignment and emit
-`xasCore/1.0`.
+**Each tag is aligned with the XAS-CDIF release of the same number**,
+and is the package version of the same number on PyPI:
+
+| tag | PyPI | emits | instruments recorded | validates against |
+|---|---|---|---|---|
+| `1.2` | 1.2.0 | `xasCore/1.2` | in `schema:instrument` on the activity | [XAS-CDIF 1.2](https://github.com/CDIF-4-XAS/XAS-CDIF/releases/tag/1.2) |
+| `1.1` | 1.1.0 | `xasCore/1.1` | in `prov:used` wrappers | [XAS-CDIF 1.1](https://github.com/CDIF-4-XAS/XAS-CDIF/releases/tag/1.1) |
+
+Each version's output validates against the `xasDocument` profile in
+that release's `release/` folder, and not against the other: 1.2 changed
+how an activity records its instruments. The earlier `v0.1.0` and
+`v0.1.1` predate the alignment and emit `xasCore/1.0`.
 
 To pin a workflow to an exact revision rather than a release, install
 from a commit -- a SHA cannot move, where a tag can. `git rev-list -n1
-1.1` gives the commit tagged `1.1`:
+1.2` gives the commit tagged `1.2`:
 
 ```bash
 pip install "git+https://github.com/CDIF-4-XAS/cdifnexmetadata@<commit>"
