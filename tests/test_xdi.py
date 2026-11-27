@@ -387,6 +387,21 @@ def test_the_same_emitter_serves_both_bindings(tmp_path):
 
 
 
+def test_an_angle_abscissa_is_a_dimension(tmp_path):
+    """XDI lets the abscissa be the monochromator angle instead of the
+    energy. No crosswalk row names that column, and it is still the
+    coordinate the others are measured against."""
+    text = (SPACED.replace("Column.1: energy eV", "Column.1: angle deg")
+            .replace("# energy i0 itrans", "# angle i0 itrans"))
+    structure = _emit(tmp_path, text).document[
+        "schema:distribution"][0]["cdi:isStructuredBy"]
+    assert structure["@type"] == ["cdi:DimensionalDataStructure"]
+    types = {c["@id"].rsplit("/", 1)[-1]: c["@type"][0]
+             for c in structure["cdi:has_DataStructureComponent"]}
+    assert types["angle"] == "cdi:DimensionComponent"
+    assert types["incidentintensity"] == "cdi:MeasureComponent"
+
+
 def test_a_column_label_carrying_a_unit_keeps_it():
     """The XDI dictionary writes a column label as a name optionally
     followed by a unit -- `energy eV` -- and 33 of the 55 reference files

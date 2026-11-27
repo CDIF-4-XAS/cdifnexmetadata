@@ -21,7 +21,7 @@ still the fullest record of those.
 
 ## Current state
 
-All four stages implemented and tested: 225 tests, 2 skipped.
+All four stages implemented and tested: 228 tests, 2 skipped.
 
 - **Two input formats.** NeXus/HDF5 and XDI, dispatched on what the file
   declares.
