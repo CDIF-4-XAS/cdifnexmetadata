@@ -83,7 +83,7 @@
           {
             "@id": "ex:DV/valid_angle_dspacing/1/dsc/angle",
             "@type": [
-              "cdi:MeasureComponent"
+              "cdi:DimensionComponent"
             ],
             "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/valid_angle_dspacing/rv/angle",

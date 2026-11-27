@@ -81,7 +81,7 @@
           {
             "@id": "ex:DV/APS-USAXS-pinSAXS/1/dsc/detectorhorizontal",
             "@type": [
-              "cdi:MeasureComponent"
+              "cdi:DimensionComponent"
             ],
             "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/APS-USAXS-pinSAXS/rv/detectorhorizontal",
@@ -108,7 +108,7 @@
           {
             "@id": "ex:DV/APS-USAXS-pinSAXS/1/dsc/detectorvertical",
             "@type": [
-              "cdi:MeasureComponent"
+              "cdi:DimensionComponent"
             ],
             "cdif:isDefinedBy_Variable": {
               "@id": "https://w3id.org/cdif/testing/APS-USAXS-pinSAXS/rv/detectorvertical",
