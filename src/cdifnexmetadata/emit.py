@@ -612,9 +612,9 @@ def _variables(
             mapping["cdif:formats_InstanceVariable"] = {"@id": iv_id}
             components.append({
                 "@id": f"ex:DV/{entry_slug}/dsc/{local}",
-                "@type": ["cdi:MeasureComponent"]
-                if not _is_coordinate(local)
-                else ["cdi:DimensionComponent"],
+                "@type": ["cdi:DimensionComponent"]
+                if _is_coordinate(cv, local)
+                else ["cdi:MeasureComponent"],
                 "cdif:isDefinedBy_Variable": {
                     "@id": rv_id,
                     "@type": ["cdi:RepresentedVariable"],
@@ -633,12 +633,15 @@ def _variables(
 
 
 #: Concepts that are the independent variable of a spectrum rather than
-#: something measured against it.
-_COORDINATES = {"monochromatorenergy", "energy", "emissionenergy"}
+#: something measured against it. `angle` is an XDI column label: the
+#: monochromator angle, XDI's alternative abscissa to energy.
+_COORDINATES = {"monochromatorenergy", "energy", "emissionenergy", "angle"}
 
 
-def _is_coordinate(local: str) -> bool:
-    return local in _COORDINATES
+def _is_coordinate(cv: ConceptValue, local: str) -> bool:
+    """Whether the file declares this array an axis, or its name says it
+    is one where the file declares nothing."""
+    return cv.is_coordinate or local in _COORDINATES
 
 
 def _collect(records: list[ConceptRecord]) -> dict[str, list[ConceptValue]]:
@@ -1068,9 +1071,22 @@ def emit_document(
         vars_, components = _variables(group[0], base, f"{slug}/{n}", slug)
         structure: dict[str, Any] = {"@id": struct_id}
         if components:
+            # A dimensional layout needs a dimension to address its cells
+            # by. With no coordinate found, the arrays are described as
+            # measures side by side, which is the wide layout. The
+            # superclass, cdi:DataStructure, is abstract in CDIF.
+            layout = "cdi:WideDataStructure"
+            if any("cdi:DimensionComponent" in c["@type"]
+                   for c in components):
+                layout = "cdi:DimensionalDataStructure"
+            else:
+                result.warnings.append(
+                    f"structure {n}: no coordinate identified among its "
+                    f"arrays; described as {layout}"
+                )
             structure = {
                 "@id": struct_id,
-                "@type": ["cdi:DimensionalDataStructure"],
+                "@type": [layout],
                 "schema:name": f"{stem} structure {n}",
                 "schema:description":
                     f"shared by {len(group)} of {len(records)} entries",

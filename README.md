@@ -124,7 +124,7 @@ from several places, each saying which.
 | `validate.py` | 462 | framing, JSON Schema, SHACL |
 | `cli.py` | 278 | dispatch, batch, reporting, exit codes |
 
-225 tests, 2 skipped. They run offline — fixtures are synthesised and
+228 tests, 2 skipped. They run offline — fixtures are synthesised and
 crosswalks written inline, so a failure means this code changed rather
 than that upstream revised a mapping row.
 
@@ -187,6 +187,13 @@ profile needs. The numbers are data.
 `cdi:isStructuredBy` only on a distribution item. Each is inline with
 its components; each part references the one it uses by `@id`. A file
 with 26 entries and two layouts can then say which entry has which.
+
+**The layout follows from the coordinates.** An array is a dimension
+component when `NXdata` declares it an axis (`@axes`, or a link standing
+for one) or when it is a known abscissa: monochromator or emission
+energy, or the XDI `angle` column. A structure with at least one is a
+`cdi:DimensionalDataStructure`; one with none is a
+`cdi:WideDataStructure`, and the run says so in a warning.
 
 **Conformance is detected, not asserted.** A profile is claimed only
 where the content for it exists, so the `dcterms:conformsTo` list is a

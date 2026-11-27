@@ -152,6 +152,68 @@ def test_the_energy_axis_is_a_dimension_not_a_measure(tmp_path):
     assert by_concept["incidentintensity"] == "cdi:MeasureComponent"
 
 
+def _component_types(structure):
+    return {
+        c["@id"].rsplit("/", 1)[-1]: c["@type"][0]
+        for c in structure["cdi:has_DataStructureComponent"]
+    }
+
+
+def test_an_axis_nxdata_declares_is_a_dimension_however_short(tmp_path):
+    """The file's own declaration decides, not the concept's name. And a
+    three-value axis is small enough for the inspector to read, which must
+    not turn it into a scalar condition."""
+    p = tmp_path / "f.nxs"
+    with h5py.File(p, "w") as f:
+        e = _entry(f, definition="NXxas_trans")
+        inst = _group(e, "instrument", "NXinstrument")
+        _group(inst, "i0", "NXdetector")["data"] = np.zeros((100, 3))
+        _group(e, "sample", "NXsample")["temperature"] = np.array(
+            [100.0, 200.0, 300.0])
+        data = _group(e, "data", "NXdata")
+        data.attrs["signal"] = "data"
+        data.attrs["axes"] = [".", "temperature"]
+        data["data"] = h5py.SoftLink("/entry/instrument/i0/data")
+        data["temperature"] = h5py.SoftLink("/entry/sample/temperature")
+    cw = _crosswalk(
+        tmp_path,
+        _row("cdifxas:incidentintensity", "skos:exactMatch",
+             "nxdl:NXxas_trans/ENTRY:NXentry/INSTRUMENT:NXinstrument/"
+             "i0:NXdetector/data"),
+        _row("cdifxas:temperature", "skos:exactMatch",
+             "nxdl:NXsample/temperature"),
+    )
+
+    doc = _emit(p, cw).document
+    structure = _structures(doc)[0]
+    assert structure["@type"] == ["cdi:DimensionalDataStructure"]
+    assert _component_types(structure) == {
+        "incidentintensity": "cdi:MeasureComponent",
+        "temperature": "cdi:DimensionComponent",
+    }
+    # An array is a variable, so it is not also a property of the sample.
+    assert "100.0" not in str(doc)
+
+
+def test_a_structure_with_no_coordinate_is_wide_not_dimensional(tmp_path):
+    """CDIF requires a dimension of a dimensional layout, and
+    cdi:DataStructure is abstract, so what is left is the wide layout."""
+    p = tmp_path / "f.nxs"
+    with h5py.File(p, "w") as f:
+        e = _entry(f, definition="NXxas_trans")
+        inst = _group(e, "instrument", "NXinstrument")
+        for d in ("i0", "itrans"):
+            _group(inst, d, "NXdetector")["data"] = np.arange(443.0)
+
+    result = _emit(p, _xas_crosswalk(tmp_path))
+    structure = _structures(result.document)[0]
+    assert structure["@type"] == ["cdi:WideDataStructure"]
+    assert set(_component_types(structure).values()) == {
+        "cdi:MeasureComponent"}
+    assert any("no coordinate" in w for w in result.warnings)
+    assert "data_structure/1.1" in result.profiles
+
+
 # ---------------------------------------------------------------------------
 # archive of parts
 # ---------------------------------------------------------------------------

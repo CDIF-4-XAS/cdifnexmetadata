@@ -36,6 +36,7 @@ base-class concepts, with a warning.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from math import prod
 from typing import Any
 
 from cdifnexmetadata.inspect.nexus import (
@@ -67,6 +68,9 @@ class ConceptValue:
     confidence: float = 1.0
     #: Set when the concept is present as an array we did not read.
     is_array: bool = False
+    #: Set when the file declares this array an axis the others are
+    #: measured against -- NeXus `NXdata@axes`, or a link standing for one.
+    is_coordinate: bool = False
     shape: tuple[int, ...] = ()
     dtype: str = ""
     #: The name the source gave this thing -- a NeXus field name, an XDI
@@ -161,6 +165,8 @@ class ConceptRecord:
                         "predicate": cv.predicate,
                         "confidence": cv.confidence,
                         "is_array": cv.is_array,
+                        **({"is_coordinate": True}
+                           if cv.is_coordinate else {}),
                         "shape": list(cv.shape),
                         "dtype": cv.dtype,
                         # Present only when set, so a dump stays
@@ -221,7 +227,7 @@ class MappingResult:
         """Key identifying entries that share a data structure.
 
         Entries in a scan series differ in title and timestamps but share
-        their layout, so the emitter writes one `cdi:DataStructure` and has
+        their layout, so the emitter writes one data structure and has
         every matching part reference it. Two entries share a structure
         when the same concepts are present as arrays with the same shapes
         and dtypes.
@@ -355,7 +361,26 @@ def map_entry(
         )
 
     _add_definition_derived(record, entry, crosswalk)
+    _apply_nxdata_roles(record, entry)
     return record
+
+
+def _apply_nxdata_roles(record: ConceptRecord, entry: NXEntry) -> None:
+    """Let `NXdata` settle which values are data, and which are axes.
+
+    A signal or axis is data however short it is. Without this, an array
+    small enough for the inspector to have read -- three temperatures, a
+    61-point energy scan -- passes for a scalar, and the structure loses
+    the coordinate it is dimensioned by.
+    """
+    signals = {s.path for d in entry.data for s in d.signals}
+    axes = {a.path for d in entry.data for a in d.axes}
+    for values in record.values.values():
+        for cv in values:
+            if cv.source_path not in signals | axes or prod(cv.shape) < 2:
+                continue
+            cv.is_array, cv.value = True, None
+            cv.is_coordinate = cv.source_path not in signals
 
 
 def _ambiguous_paths(crosswalk: Crosswalk) -> set[str]:
